@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MD5,Salt,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="对密码加密的发展　　为了解决 重要信息明文存储 的安全问题，从明文存储信息（如密码）改为存储加密信息，典型的加密算法是 MD5 和 SHA1。　　当用户登陆的时候，会把用户输入的密码执行MD5（或者 SHA1）后再和数据库中的信息对比，判断用户身份是否合法，这种加密算法称为散列。 　　上述的设计方式已经有较高的安全性，但如果密码设置不够复杂，仍然可能被破解。好事者收集常用的密码，然后对他们执行 M">
+<meta name="keywords" content="MD5,Salt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MD5加密和验证">
+<meta property="og:url" content="https://motainzhang.com/2016/06/01/MD5加密和验证/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="对密码加密的发展　　为了解决 重要信息明文存储 的安全问题，从明文存储信息（如密码）改为存储加密信息，典型的加密算法是 MD5 和 SHA1。　　当用户登陆的时候，会把用户输入的密码执行MD5（或者 SHA1）后再和数据库中的信息对比，判断用户身份是否合法，这种加密算法称为散列。 　　上述的设计方式已经有较高的安全性，但如果密码设置不够复杂，仍然可能被破解。好事者收集常用的密码，然后对他们执行 M">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-25T06:47:07.788Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MD5加密和验证">
+<meta name="twitter:description" content="对密码加密的发展　　为了解决 重要信息明文存储 的安全问题，从明文存储信息（如密码）改为存储加密信息，典型的加密算法是 MD5 和 SHA1。　　当用户登陆的时候，会把用户输入的密码执行MD5（或者 SHA1）后再和数据库中的信息对比，判断用户身份是否合法，这种加密算法称为散列。 　　上述的设计方式已经有较高的安全性，但如果密码设置不够复杂，仍然可能被破解。好事者收集常用的密码，然后对他们执行 M">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2016/06/01/MD5加密和验证/">
+
+
+
+
+
+  <title>MD5加密和验证 | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2016/06/01/MD5加密和验证/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MD5加密和验证</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-01T17:15:44+00:00">
+                2016-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/信息加密/" itemprop="url" rel="index">
+                    <span itemprop="name">信息加密</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/01/MD5加密和验证/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2016/06/01/MD5加密和验证/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="对密码加密的发展"><a href="#对密码加密的发展" class="headerlink" title="对密码加密的发展"></a>对密码加密的发展</h2><p>　　为了解决 重要信息明文存储 的安全问题，从明文存储信息（如密码）改为<strong>存储加密信息</strong>，典型的加密算法是 MD5 和 SHA1。<br>　　当用户登陆的时候，会把用户输入的密码执行MD5（或者 SHA1）后再和数据库中的信息对比，判断用户身份是否合法，这种加密算法称为散列。</p>
+<p>　　上述的设计方式已经有较高的安全性，但如果密码设置不够复杂，仍然可能被破解。好事者收集常用的密码，然后对他们执行 MD5 或者 SHA1，然后做成一个数据量非常庞大的数据字典，然后和泄露的数据库中的密码对比，如果你的原始密码很不幸的被包含在这个数据字典中，那么花不了多长时间就能把你的原始密码匹配出来。于是新的密码设计方法诞生——MD5+<strong>盐</strong>。由于加了 Salt，即便数据库泄露了，但是由于密码都是加了Salt之后的散列，坏人们的数据字典已经无法直接匹配，明文密码被破解出来的概率也大大降低。</p>
+<h2 id="什么是MD5加密"><a href="#什么是MD5加密" class="headerlink" title="什么是MD5加密"></a>什么是MD5加密</h2><p>参考：<a href="https://blog.csdn.net/u011781521/article/details/77925608" target="_blank" rel="noopener">MD5加密</a><br>　　MD5(Message Digest Algorithm 5，消息摘要算法第五版)，是计算机安全领域广泛使用的一种<strong>散列函数，提供消息的完整性保护</strong>。严格来说，它是一种确保信息完整性的摘要算法。在某种意义上来说，也可以算作一种加密算法。</p>
+<h3 id="MD5加密后，数据的长度"><a href="#MD5加密后，数据的长度" class="headerlink" title="MD5加密后，数据的长度"></a>MD5加密后，数据的长度</h3><p>md5的长度，默认为128bit位。<br>这样的表达不友好，所以将二进制转成了16进制，每4个bit表示一个16进制，所以换成16进制表示后，为<strong>32位</strong>。</p>
+<h3 id="MD5算法的特点"><a href="#MD5算法的特点" class="headerlink" title="MD5算法的特点"></a>MD5算法的特点</h3><ul>
+<li>压缩性：任意长度的数据，算出的MD5值长度都是固定的。</li>
+<li>容易计算：从原数据计算出MD5值很容易。</li>
+<li>抗修改性：对原数据进行任何改动，哪怕只修改1个字节，所得到的MD5值都有很大区别。</li>
+<li>弱抗碰撞：已知原数据和其MD5值，想找到一个具有相同MD5值的数据（即伪造数据）是非常困难的。</li>
+<li>强抗碰撞：想找到两个不同的数据，使它们具有相同的MD5值，是非常困难的。</li>
+</ul>
+<p>MD5 的作用是让大容量信息在用数字签名软件签署私人密钥前被”压缩”成一种保密的格式（就是把一个任意长度的字节串变换成一定长的十六进制数字串）。</p>
+<p>MD5是一个不可逆的过程，生成消息摘要后<strong>不能通过结果解析得到原来的内容</strong>。</p>
+<h2 id="JAVA中实现MD5加密"><a href="#JAVA中实现MD5加密" class="headerlink" title="JAVA中实现MD5加密"></a>JAVA中实现MD5加密</h2><ul>
+<li><p>JAVA中已有MD5类，在<code>java.security.MessageDigest</code>包中，名字就是<code>MessageDigest</code>，为应用程序提供信息摘要算法的功能，如 MD5 或 SHA 算法。</p>
+</li>
+<li><p>Spring提供<code>DigestUtils</code>类。只提供了MD5算法。实质也是用<code>MessageDigest</code>类进行处理，做了封装。  </p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] bytes = password.getBytes();<span class="comment">//password为String类型时，将其转换为byte数组</span></span><br><span class="line">DigestUtils.md5DigestAsHex(<span class="keyword">byte</span>[] bytes);<span class="comment">//返回类型为String</span></span><br></pre></td></tr></table></figure>
+<h2 id="盐（Salt"><a href="#盐（Salt" class="headerlink" title="盐（Salt)"></a>盐（Salt)</h2><p>　　在<a href="https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A0%81%E5%AD%A6" target="_blank" rel="noopener">密码学</a>中，指在<a href="">散列</a>之前将散列内容（如密码）的<strong>任意固定位置插入特定的字符串</strong>。这样在散列中加入字符串的方式称为<strong>加盐</strong>，让加盐后的散列结果和没有加盐的结果不相同，在不同的应用情景中，这个处理可以<strong>增加额外的安全性</strong>。</p>
+<h2 id="编写MD5-Salt的工具类"><a href="#编写MD5-Salt的工具类" class="headerlink" title="编写MD5+Salt的工具类"></a>编写MD5+Salt的工具类</h2><h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><ol>
+<li>利用Random类生成两个8位的随机数（nextInt方法最多能完全包含8位整数），将其拼接成16位字符串，作为Salt</li>
+<li>通过Spring的<code>DigestUtils</code>类，将密码和盐拼接后进行加密，生成32位的密码</li>
+<li>再将盐和32位的密码错位拼接，生成48位的密码<h3 id="校验"><a href="#校验" class="headerlink" title="校验"></a>校验</h3>从数据库取出加密的密码，取出错位的盐，将盐与用户输入的密码拼接。进行MD5加密后，与数据库密码进行比较</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">public class MD5Util &#123;</span><br><span class="line"></span><br><span class="line">    //生成48位的加盐MD5</span><br><span class="line">    public static String generate(String password) &#123;</span><br><span class="line"></span><br><span class="line">        Random r = new Random();</span><br><span class="line">        StringBuilder sb = new StringBuilder(16);</span><br><span class="line">        //两个[0，99999999) 的随机整数拼接</span><br><span class="line">        sb.append(r.nextInt(99999999)).append(r.nextInt(99999999));</span><br><span class="line"></span><br><span class="line">        //保证StringBuilder的长度为16</span><br><span class="line">        int len = sb.length();</span><br><span class="line">        if (len &lt; 16) &#123;</span><br><span class="line">            for (int i = 0; i &lt; 16 - len; i++) &#123;</span><br><span class="line">                sb.append(&quot;0&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        String salt = sb.toString();//将StringBuilder转化为字符串，即为SALT</span><br><span class="line"></span><br><span class="line">        password = md5Hex(password + salt);//将密码与该盐拼接，进行MD5加密，生成32位的密码</span><br><span class="line"></span><br><span class="line">        //将16位的salt与32位的（密码+salt）生成的MD5值再次拼接（因为MD5不可逆，这样能够重新获取salt），生成48位密码</span><br><span class="line">        char[] chars = new char[48];</span><br><span class="line">        for (int i = 0; i &lt; 48; i += 3) &#123;</span><br><span class="line"></span><br><span class="line">            chars[i] = password.charAt(i / 3 * 2);</span><br><span class="line"></span><br><span class="line">            char c = salt.charAt(i / 3);</span><br><span class="line">            chars[i + 1] = c;</span><br><span class="line">            chars[i + 2] = password.charAt(i / 3 * 2 + 1);</span><br><span class="line">        &#125;</span><br><span class="line">        return new String(chars);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //    校验密码是否正确</span><br><span class="line">    public static boolean verify(String password, String md5) &#123;</span><br><span class="line">        char[] cs1 = new char[32];</span><br><span class="line">        char[] cs2 = new char[16];</span><br><span class="line">        for (int i = 0; i &lt; 48; i += 3) &#123;</span><br><span class="line">            //分解48位的密码，获取salt 和 MD5值</span><br><span class="line">            cs1[i / 3 * 2] = md5.charAt(i);</span><br><span class="line">            cs1[i / 3 * 2 + 1] = md5.charAt(i + 2);</span><br><span class="line"></span><br><span class="line">            cs2[i / 3] = md5.charAt(i + 1);</span><br><span class="line">        &#125;</span><br><span class="line">        String salt = new String(cs2);</span><br><span class="line">        //将输入的密码和解析所获得的盐相加生成MD5值，与原MD5值比较来确认密码</span><br><span class="line">        return md5Hex(password + salt).equals(new String(cs1));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取十六进制字符串形式的MD5摘要</span><br><span class="line">     */</span><br><span class="line">    private static String md5Hex(String src) &#123;</span><br><span class="line">        return DigestUtils.md5DigestAsHex(src.getBytes());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MD5/" rel="tag"># MD5</a>
+          
+            <a href="/tags/Salt/" rel="tag"># Salt</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/10/JDBC的简单总结/" rel="next" title="JDBC的简单总结">
+                <i class="fa fa-chevron-left"></i> JDBC的简单总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/11/AJAX/" rel="prev" title="AJAX">
+                AJAX <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4" alt="MotainZhang">
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对密码加密的发展"><span class="nav-number">1.</span> <span class="nav-text">对密码加密的发展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是MD5加密"><span class="nav-number">2.</span> <span class="nav-text">什么是MD5加密</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MD5加密后，数据的长度"><span class="nav-number">2.1.</span> <span class="nav-text">MD5加密后，数据的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MD5算法的特点"><span class="nav-number">2.2.</span> <span class="nav-text">MD5算法的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JAVA中实现MD5加密"><span class="nav-number">3.</span> <span class="nav-text">JAVA中实现MD5加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#盐（Salt"><span class="nav-number">4.</span> <span class="nav-text">盐（Salt)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写MD5-Salt的工具类"><span class="nav-number">5.</span> <span class="nav-text">编写MD5+Salt的工具类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加密"><span class="nav-number">5.1.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#校验"><span class="nav-number">5.2.</span> <span class="nav-text">校验</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
