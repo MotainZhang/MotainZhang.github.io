@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="IDEA," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="File → New → Project...    接着直接next → 自定义项目名称和项目存放位置 → finish 创建好基本框架后，IDEA会提示maven project need to be imported。选择Enable Auto-Import（之后对pom.xml添加新的依赖，IDEA会自动下载相关依赖包）。  创建源代码目录　　maven web项目默认没有java源代码目">
+<meta name="keywords" content="IDEA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用IDEA+Maven进行Java Web开发的操作流程">
+<meta property="og:url" content="https://motainzhang.com/2018/05/08/使用IDEA-Maven进行Java-Web开发的操作流程/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="File → New → Project...    接着直接next → 自定义项目名称和项目存放位置 → finish 创建好基本框架后，IDEA会提示maven project need to be imported。选择Enable Auto-Import（之后对pom.xml添加新的依赖，IDEA会自动下载相关依赖包）。  创建源代码目录　　maven web项目默认没有java源代码目">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/newProject_1.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/newProject_2.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/Run%20Configurations.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/%E9%85%8D%E7%BD%AEtomcat7%E6%8F%92%E4%BB%B6.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/Edit%20Configutations.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/IDEA%E9%85%8D%E7%BD%AEMaven%E7%9A%84tomcat.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/IDEA%E9%85%8D%E7%BD%AETomcat%E6%8F%92%E4%BB%B6.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/skip%20test.png">
+<meta property="og:updated_time" content="2018-10-25T05:05:06.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用IDEA+Maven进行Java Web开发的操作流程">
+<meta name="twitter:description" content="File → New → Project...    接着直接next → 自定义项目名称和项目存放位置 → finish 创建好基本框架后，IDEA会提示maven project need to be imported。选择Enable Auto-Import（之后对pom.xml添加新的依赖，IDEA会自动下载相关依赖包）。  创建源代码目录　　maven web项目默认没有java源代码目">
+<meta name="twitter:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/newProject_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2018/05/08/使用IDEA-Maven进行Java-Web开发的操作流程/"/>
+
+
+
+
+
+  <title>使用IDEA+Maven进行Java Web开发的操作流程 | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2018/05/08/使用IDEA-Maven进行Java-Web开发的操作流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用IDEA+Maven进行Java Web开发的操作流程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-08T00:44:17+00:00">
+                2018-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/IDE/" itemprop="url" rel="index">
+                    <span itemprop="name">IDE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/08/使用IDEA-Maven进行Java-Web开发的操作流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/05/08/使用IDEA-Maven进行Java-Web开发的操作流程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="File-→-New-→-Project"><a href="#File-→-New-→-Project" class="headerlink" title="File → New → Project..."></a><code>File</code> → <code>New</code> → <code>Project...</code></h2><p><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/newProject_1.png" alt="newProject_1">  </p>
+<p><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/newProject_2.png" alt="newProject_2"></p>
+<p>接着直接next → 自定义项目名称和项目存放位置 → finish</p>
+<p>创建好基本框架后，IDEA会提示<code>maven project need to be imported</code>。选择<code>Enable Auto-Import</code>（之后对pom.xml添加新的依赖，IDEA会自动下载相关依赖包）。</p>
+<hr>
+<h2 id="创建源代码目录"><a href="#创建源代码目录" class="headerlink" title="创建源代码目录"></a>创建源代码目录</h2><p>　　maven web项目默认没有java源代码目录，需要手动创建，并设置其为源代码目录：<br>右键main目录-&gt; <code>New</code>-&gt;<code>Directory</code>-&gt;输入java-&gt;右键java-&gt;<code>Mark Directory as</code>-&gt; <code>Sources Root</code><br>这样就创建了存放java源文件的目录。</p>
+<hr>
+<h2 id="创建resources目录"><a href="#创建resources目录" class="headerlink" title="创建resources目录"></a>创建<code>resources</code>目录</h2><p>在项目的 src → main目录下创建<code>resources</code>目录，并<code>Mark Directory as</code> → <code>Resources Root</code></p>
+<hr>
+<h2 id="配置Maven的Tomcat插件"><a href="#配置Maven的Tomcat插件" class="headerlink" title="配置Maven的Tomcat插件"></a>配置Maven的Tomcat插件</h2><h3 id="eclipse配置Maven的Tomcat插件"><a href="#eclipse配置Maven的Tomcat插件" class="headerlink" title="eclipse配置Maven的Tomcat插件"></a>eclipse配置Maven的Tomcat插件</h3><ul>
+<li><p>先安装maven插件：导航栏 help → Install New Software… → 搜索 m2eclipse,选中并下载安装即可</p>
+</li>
+<li><p>右键项目 -&gt; Run As -&gt; <code>Maven build</code>(已有配置，直接运行)/<code>Maven build...</code>（新建配置）<br><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/Run%20Configurations.png" alt="eclipse配置maven的tomcat插件"></p>
+</li>
+<li><p>填写项目名称<code>Name</code>、项目所在目录<code>Base directory</code>、<code>Goals</code>栏填写<strong>tomcat7:run</strong>；<strong>勾选Skip Tests（加快启动速度）</strong>，Apply即可。<br><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/%E9%85%8D%E7%BD%AEtomcat7%E6%8F%92%E4%BB%B6.png" alt="具体配置步骤"></p>
+</li>
+</ul>
+<h3 id="IDEA配置Maven的Tomcat插件"><a href="#IDEA配置Maven的Tomcat插件" class="headerlink" title="IDEA配置Maven的Tomcat插件"></a>IDEA配置Maven的Tomcat插件</h3><ul>
+<li><p>界面右上角<code>select Run/Debug Configuration</code>下拉菜单 -&gt; <code>edit configurations...</code><br><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/Edit%20Configutations.png" alt=""></p>
+</li>
+<li><p>点击 弹出窗口的左上角<strong>+号</strong> -&gt; Maven<br><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/IDEA%E9%85%8D%E7%BD%AEMaven%E7%9A%84tomcat.png" alt=""></p>
+</li>
+<li><p>填写项目名称<code>Name</code>、项目所在目录<code>Working directory</code>、<code>Command line</code>栏填写<strong>tomcat7:run</strong>，Apply即可。<br><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/IDEA%E9%85%8D%E7%BD%AETomcat%E6%8F%92%E4%BB%B6.png" alt=""></p>
+</li>
+<li><p>IDEA中的<code>skip tests</code>在界面右侧设置 -&gt; Maven Projects -&gt; 单击闪电标志即可<br><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/skip%20test.png" alt=""></p>
+</li>
+</ul>
+<hr>
+<h2 id="pom-xml中添加tomcat插件的相关配置"><a href="#pom-xml中添加tomcat插件的相关配置" class="headerlink" title="pom.xml中添加tomcat插件的相关配置"></a>pom.xml中添加tomcat插件的相关配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat7-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">uriEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">uriEncoding</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>项目名称<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">server</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="pom-xml中添加compiler插件的相关配置"><a href="#pom-xml中添加compiler插件的相关配置" class="headerlink" title="pom.xml中添加compiler插件的相关配置"></a>pom.xml中添加compiler插件的相关配置</h2><ul>
+<li>为什么需要配置？<br>两个原因：<ul>
+<li>如果不配置，就会用maven-compiler-plugin默认的jdk版本来进行处理，容易出现版本不匹配的问题。</li>
+<li>一般而言，target与source需要保持一致。但是，有时候为了让JavaWeb程序能在其他环境中运行，会<strong>将source和target设为要运行的环境中的jdk版本</strong>。（项目源代码中不能使用target的jdk不支持的语法，否则编译无法通过)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.7.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IDEA/" rel="tag"># IDEA</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/07/Servlet的简单总结/" rel="next" title="Servlet的简单总结">
+                <i class="fa fa-chevron-left"></i> Servlet的简单总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/10/Cookie和Session/" rel="prev" title="Cookie和Session">
+                Cookie和Session <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4"
+                alt="MotainZhang" />
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-→-New-→-Project"><span class="nav-number">1.</span> <span class="nav-text">File → New → Project...</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建源代码目录"><span class="nav-number">2.</span> <span class="nav-text">创建源代码目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建resources目录"><span class="nav-number">3.</span> <span class="nav-text">创建resources目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Maven的Tomcat插件"><span class="nav-number">4.</span> <span class="nav-text">配置Maven的Tomcat插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#eclipse配置Maven的Tomcat插件"><span class="nav-number">4.1.</span> <span class="nav-text">eclipse配置Maven的Tomcat插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IDEA配置Maven的Tomcat插件"><span class="nav-number">4.2.</span> <span class="nav-text">IDEA配置Maven的Tomcat插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pom-xml中添加tomcat插件的相关配置"><span class="nav-number">5.</span> <span class="nav-text">pom.xml中添加tomcat插件的相关配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pom-xml中添加compiler插件的相关配置"><span class="nav-number">6.</span> <span class="nav-text">pom.xml中添加compiler插件的相关配置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>

@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="用技术提升美好事物发生的概率_ Technologically, for greater probability to be happy.  推荐10 个短小却超实用的 JavaScript 代码段JavaScript正变得越来越流行，它已经成为前端开发的第一选择，并且利用基于JavaScript语言的NodeJS，我们也可以开发出高性能的后端服务，甚至我还看到在硬件编程领域也出现了JavaScr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js常用代码段">
+<meta property="og:url" content="https://motainzhang.com/2016/07/19/js常用代码段/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="用技术提升美好事物发生的概率_ Technologically, for greater probability to be happy.  推荐10 个短小却超实用的 JavaScript 代码段JavaScript正变得越来越流行，它已经成为前端开发的第一选择，并且利用基于JavaScript语言的NodeJS，我们也可以开发出高性能的后端服务，甚至我还看到在硬件编程领域也出现了JavaScr">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2640343099,240443346&fm=27&gp=0.jpg">
+<meta property="og:updated_time" content="2018-10-25T05:05:06.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js常用代码段">
+<meta name="twitter:description" content="用技术提升美好事物发生的概率_ Technologically, for greater probability to be happy.  推荐10 个短小却超实用的 JavaScript 代码段JavaScript正变得越来越流行，它已经成为前端开发的第一选择，并且利用基于JavaScript语言的NodeJS，我们也可以开发出高性能的后端服务，甚至我还看到在硬件编程领域也出现了JavaScr">
+<meta name="twitter:image" content="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2640343099,240443346&fm=27&gp=0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2016/07/19/js常用代码段/"/>
+
+
+
+
+
+  <title>js常用代码段 | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2016/07/19/js常用代码段/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js常用代码段</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-19T15:19:23+00:00">
+                2016-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/19/js常用代码段/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2016/07/19/js常用代码段/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>用技术提升美好事物发生的概率_</p>
+<p><em>Technologically, for greater probability to be happy.</em></p>
+<p><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2640343099,240443346&amp;fm=27&amp;gp=0.jpg" alt=""></p>
+<h1 id="推荐10-个短小却超实用的-JavaScript-代码段"><a href="#推荐10-个短小却超实用的-JavaScript-代码段" class="headerlink" title="推荐10 个短小却超实用的 JavaScript 代码段"></a>推荐10 个短小却超实用的 JavaScript 代码段</h1><p>JavaScript正变得越来越流行，它已经成为前端开发的第一选择，并且利用基于JavaScript语言的NodeJS，我们也可以开发出高性能的后端服务，甚至我还看到在硬件编程领域也出现了JavaScript的身影。JavaScript正在逐渐进化为一门全能的开发语言。</p>
+<p>但用好JavaScript并不容易，你除了需要掌握它的语法并知道如何写出高质量的代码之外，还需要了解如何解决那些几乎在每个项目中都会遇到的需求场景，比如：判断日期，高亮文本，限制字符数等等，有很多第三方库可以解决这些问题，但这些库可能并非只是为解决这一个问题而创建的，这意味着你需要引入了很多无关的代码，这将使你的整个系统变得臃肿，而且也会影响到系统的性能。<strong>我的做法是，收集和使用那些常见的JavaScript代码段，并在需要时，尽可能首先使用它们</strong>。下面便是我收集的10段实用JavaScript代码，基于它们你还可以创造出更强大的JS插件或功能函数。</p>
+<h4 id="1-判断日期是否有效"><a href="#1-判断日期是否有效" class="headerlink" title="1. 判断日期是否有效"></a>1. 判断日期是否有效</h4><p>JavaScript中自带的日期函数还是太过简单，很难满足真实项目中对不同日期格式进行解析和判断的需要。JQuery也有一些第三方库来使日期相关的处理变得简单，但有时你可能只需要一个非常简单的函数，而不想引入一个庞大的第三方库。这时，你可以使用下面这段日期校验代码，它允许你自定义日期格式并进行日期有效性的校验。</p>
+<pre><code>function isValidDate(value, userFormat) {
+
+  // Set default format if format is not provided
+  userFormat = userFormat || &apos;mm/dd/yyyy&apos;;
+
+  // Find custom delimiter by excluding
+  // month, day and year characters
+  var delimiter = /[^mdy]/.exec(userFormat)[0];
+
+  // Create an array with month, day and year
+  // so we know the format order by index
+  var theFormat = userFormat.split(delimiter);
+
+  // Create array from user date
+  var theDate = value.split(delimiter);
+
+  function isDate(date, format) {
+    var m, d, y, i = 0, len = format.length, f;
+    for (i; i &lt; len; i++) {
+      f = format[i];
+      if (/m/.test(f)) m = date[i];
+      if (/d/.test(f)) d = date[i];
+      if (/y/.test(f)) y = date[i];
+    }
+    return (
+      m &gt; 0 &amp;&amp; m &lt; 13 &amp;&amp;
+      y &amp;&amp; y.length === 4 &amp;&amp;
+      d &gt; 0 &amp;&amp;
+      // Check if it&apos;s a valid day of the month
+      d &lt;= (new Date(y, m, 0)).getDate()
+    );
+  }
+
+  return isDate(theDate, theFormat);
+}
+</code></pre><p><strong>使用方法：</strong><br>下面这个调用返回false，因为11月份没有31天</p>
+<pre><code>isValidDate(&apos;dd-mm-yyyy&apos;, &apos;31/11/2012&apos;)
+</code></pre><hr>
+<h4 id="2-获取一组元素的最大宽度或高度"><a href="#2-获取一组元素的最大宽度或高度" class="headerlink" title="2. 获取一组元素的最大宽度或高度"></a>2. 获取一组元素的最大宽度或高度</h4><p>下面这个函数，对于需要进行动态排版的开发人员非常有用。</p>
+<pre><code>var getMaxHeight = function ($elms) {
+  var maxHeight = 0;
+  $elms.each(function () {
+    // In some cases you may want to use outerHeight() instead
+    var height = $(this).height();
+    if (height &gt; maxHeight) {
+      maxHeight = height;
+    }
+  });
+  return maxHeight;
+};
+</code></pre><p><strong>使用方法：</strong></p>
+<pre><code>$(elements).height( getMaxHeight($(elements)) );
+</code></pre><hr>
+<h4 id="3-高亮文本"><a href="#3-高亮文本" class="headerlink" title="3. 高亮文本"></a>3. 高亮文本</h4><p>有很多JQuery的第三方库可以实现高亮文本的功能，但我更喜欢用下面这一小段JavaScript代码来实现这个功能，它非常短小，而且可以根据我的需要去进行灵活的修改，而且可以自己定义高亮的样式。下面这两个函数可以帮助你创建自己的文本高亮插件。</p>
+<pre><code>function highlight(text, words, tag) {
+
+  // Default tag if no tag is provided
+  tag = tag || &apos;span&apos;;
+
+  var i, len = words.length, re;
+  for (i = 0; i &lt; len; i++) {
+    // Global regex to highlight all matches
+    re = new RegExp(words[i], &apos;g&apos;);
+    if (re.test(text)) {
+      text = text.replace(re, &apos;&lt;&apos;+ tag +&apos; class=&quot;highlight&quot;&gt;$&amp;&lt;/&apos;+ tag +&apos;&gt;&apos;);
+    }
+  }
+
+  return text;
+}
+</code></pre><p>你同样会需要取消高亮的函数：</p>
+<pre><code>function unhighlight(text, tag) {
+  // Default tag if no tag is provided
+  tag = tag || &apos;span&apos;;
+  var re = new RegExp(&apos;(&lt;&apos;+ tag +&apos;.+?&gt;|&lt;\/&apos;+ tag +&apos;&gt;)&apos;, &apos;g&apos;);
+  return text.replace(re, &apos;&apos;);
+}
+</code></pre><p><strong>使用方法：</strong></p>
+<pre><code>$(&apos;p&apos;).html( highlight(
+    $(&apos;p&apos;).html(), // the text
+    [&apos;foo&apos;, &apos;bar&apos;, &apos;baz&apos;, &apos;hello world&apos;], // list of words or phrases to highlight
+    &apos;strong&apos; // custom tag
+));
+</code></pre><hr>
+<h4 id="4-文字动效"><a href="#4-文字动效" class="headerlink" title="4. 文字动效"></a>4. 文字动效</h4><p>有时你会希望给你的一段文字增加动效，让其中的每个字都动起来。你可以使用下面这段jQuery插件代码来达到这个效果。当然你需要结合一个CSS3 transition样式来达到更好的效果。</p>
+<pre><code>$.fn.animateText = function(delay, klass) {
+
+  var text = this.text();
+  var letters = text.split(&apos;&apos;);
+
+  return this.each(function(){
+    var $this = $(this);
+    $this.html(text.replace(/./g, &apos;&lt;span class=&quot;letter&quot;&gt;$&amp;&lt;/span&gt;&apos;));
+    $this.find(&apos;span.letter&apos;).each(function(i, el){
+      setTimeout(function(){ $(el).addClass(klass); }, delay * i);
+    });
+  });
+
+};
+</code></pre><p><strong>使用方法：</strong></p>
+<pre><code>$(&apos;p&apos;).animateText(15, &apos;foo&apos;);
+</code></pre><hr>
+<h4 id="5-逐个隐藏元素"><a href="#5-逐个隐藏元素" class="headerlink" title="5. 逐个隐藏元素"></a>5. 逐个隐藏元素</h4><p>下面这个jQuery插件可以根据你设置的步长（间隔时间）来逐个隐藏一组元素。在列表元素的重新加载中使用，可以达到很好的效果。</p>
+<pre><code>$.fn.fadeAll = function (ops) {
+  var o = $.extend({
+    delay: 500, // delay between elements
+    speed: 500, // animation speed
+    ease: &apos;swing&apos; // other require easing plugin
+  }, ops);
+  var $el = this;
+  for (var i=0, d=0, l=$el.length; i&lt;l; i++, d+=o.delay) {
+    $el.eq(i).delay(d).fadeIn(o.speed, o.ease);
+  }
+  return $el;
+}
+</code></pre><p><strong>使用方法：</strong></p>
+<pre><code>$(elements).fadeAll({ delay: 300, speed: 300 });
+</code></pre><hr>
+<h4 id="6-限制文本字数"><a href="#6-限制文本字数" class="headerlink" title="6. 限制文本字数"></a>6. 限制文本字数</h4><p>下面这端脚本允许你根据给定的字符长度截取文本，如果文本被截取，那么它的后面会自动带上省略号。</p>
+<pre><code>function excerpt(str, nwords) {
+  var words = str.split(&apos; &apos;);
+  words.splice(nwords, words.length-1);
+  return words.join(&apos; &apos;) +
+    (words.length !== str.split(&apos; &apos;).length ? &apos;…&apos; : &apos;&apos;);
+}
+</code></pre><hr>
+<h4 id="7-判断相应式布局中当前适配度"><a href="#7-判断相应式布局中当前适配度" class="headerlink" title="7. 判断相应式布局中当前适配度"></a>7. 判断相应式布局中当前适配度</h4><p>目前很多设计已经采用了响应式布局来适配网站或应用在不同设备上的显示。你经常需要在代码中判断当前处于哪一个屏幕适配度下。</p>
+<pre><code>function isBreakPoint(bp) {
+  // The breakpoints that you set in your css
+  var bps = [320, 480, 768, 1024];
+  var w = $(window).width();
+  var min, max;
+  for (var i = 0, l = bps.length; i &lt; l; i++) {
+    if (bps[i] === bp) {
+      min = bps[i-1] || 0;
+      max = bps[i];
+      break;
+    }
+  }
+  return w &gt; min &amp;&amp; w &lt;= max;
+}
+</code></pre><p><strong>使用方法：</strong></p>
+<pre><code>if ( isBreakPoint(320) ) {
+  // breakpoint at 320 or less
+}
+if ( isBreakPoint(480) ) {
+  // breakpoint between 320 and 480
+}
+…
+</code></pre><hr>
+<h4 id="8-全局计数"><a href="#8-全局计数" class="headerlink" title="8. 全局计数"></a>8. 全局计数</h4><p>在一些游戏或广告场景中，你需要记录用户在当前页面上点击某一个按钮的次数，这时你可以使用jQuery的.data()函数来处理：</p>
+<pre><code>$(element)
+    .data(&apos;counter&apos;, 0) // begin counter at zero
+    .click(function() {
+        var counter = $(this).data(&apos;counter&apos;); // get
+        $(this).data(&apos;counter&apos;, counter + 1); // set
+        // do something else...
+    });
+</code></pre><hr>
+<h4 id="9-嵌入优酷视频"><a href="#9-嵌入优酷视频" class="headerlink" title="9. 嵌入优酷视频"></a>9. 嵌入优酷视频</h4><pre><code>function embedYouku(link, ops) {
+
+  var o = $.extend({
+    width: 480,
+    height: 320,
+    params: &apos;&apos;
+  }, ops);
+
+  var id = /\?v\=(\w+)/.exec(link)[1];
+
+  return &apos;&lt;embed allowFullScreen=&quot;true&quot; id=&quot;embedid&quot;  quality=&quot;high&quot; width=&quot;&apos;+o.width+&apos;&quot; height=&quot;&apos;+o.height+&apos;&quot; align=&quot;middle&quot; allowScriptAccess=&quot;always&quot; type=&quot;application/x-shockwave-flash&quot; src=&quot;&apos;+id+&apos;?&apos;+o.ops&apos;&quot;&apos;;
+}
+</code></pre><p><strong>使用方法：</strong></p>
+<pre><code>embedYouku(
+  &apos;http://static.youku.com/v/swf/qplayer.swf&apos;, 
+  {&apos;winType=adshow&amp;VideoIDS=XMTE3NzQ0NTky&amp;isAutoPlay=false&amp;isShowRelatedVideo=false&apos;}
+);
+</code></pre><hr>
+<h4 id="10-创建动态菜单或下拉列表"><a href="#10-创建动态菜单或下拉列表" class="headerlink" title="10. 创建动态菜单或下拉列表"></a>10. 创建动态菜单或下拉列表</h4><p>在很多场景中，我们都需要动态地创建菜单、下拉列表或列表项。下面是一段最基础的代码实现上面的功能，你可以根据实际需要进行相应的扩展。</p>
+<pre><code>function makeMenu(items, tags) {
+
+  tags = tags || [&apos;ul&apos;, &apos;li&apos;]; // default tags
+  var parent = tags[0];
+  var child = tags[1];
+
+  var item, value = &apos;&apos;;
+  for (var i = 0, l = items.length; i &lt; l; i++) {
+    item = items[i];
+    // Separate item and value if value is present
+    if (/:/.test(item)) {
+      item = items[i].split(&apos;:&apos;)[0];
+      value = items[i].split(&apos;:&apos;)[1];
+    }
+    // Wrap the item in tag
+    items[i] = &apos;&lt;&apos;+ child +&apos; &apos;+
+      (value &amp;&amp; &apos;value=&quot;&apos;+value+&apos;&quot;&apos;) +&apos;&gt;&apos;+ // add value if present
+        item +&apos;&lt;/&apos;+ child +&apos;&gt;&apos;;
+  }
+
+  return &apos;&lt;&apos;+ parent +&apos;&gt;&apos;+ items.join(&apos;&apos;) +&apos;&lt;/&apos;+ parent +&apos;&gt;&apos;;
+}
+</code></pre><p><strong>使用方法：</strong></p>
+<pre><code>// Dropdown select month
+makeMenu(
+  [&apos;January:JAN&apos;, &apos;February:FEB&apos;, &apos;March:MAR&apos;], // item:value
+  [&apos;select&apos;, &apos;option&apos;]
+);
+
+// List of groceries
+makeMenu(
+  [&apos;Carrots&apos;, &apos;Lettuce&apos;, &apos;Tomatos&apos;, &apos;Milk&apos;],
+  [&apos;ol&apos;, &apos;li&apos;]
+);
+</code></pre><hr>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p>以上只是那些实用JavaScript代码段中的一小部分，我也建议你平时注意收集或自己编写这样的基础代码段，它们能在很多项目中使用或通过一些改造提供更完善的功能，使用这些代码段将为你节省下大量的开发时间。</p>
+<hr>
+<blockquote>
+<p>简书签约作者：技匠，以上内容欢迎大家分享到朋友圈/微博等。</p>
+</blockquote>
+<p>如果你觉得文章不错，或许也会喜欢我的新书《程序员的自我修养》，一本写给程序员的思考书（清华大学…</p>
+<p>赞赏支持</p>
+<p><a href="/nb/3235992">技匠•程序员</a></p>
+<p>© 著作权归作者所有</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/19/hexo-github个人博客搭建/" rel="next" title="hexo github个人博客搭建">
+                <i class="fa fa-chevron-left"></i> hexo github个人博客搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/19/js常用正则表达式/" rel="prev" title="js常用正则表达式">
+                js常用正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4"
+                alt="MotainZhang" />
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐10-个短小却超实用的-JavaScript-代码段"><span class="nav-number">1.</span> <span class="nav-text">推荐10 个短小却超实用的 JavaScript 代码段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-判断日期是否有效"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1. 判断日期是否有效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-获取一组元素的最大宽度或高度"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">2. 获取一组元素的最大宽度或高度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-高亮文本"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">3. 高亮文本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-文字动效"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">4. 文字动效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-逐个隐藏元素"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">5. 逐个隐藏元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-限制文本字数"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">6. 限制文本字数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-判断相应式布局中当前适配度"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">7. 判断相应式布局中当前适配度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-全局计数"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">8. 全局计数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-嵌入优酷视频"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">9. 嵌入优酷视频</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-创建动态菜单或下拉列表"><span class="nav-number">1.0.0.10.</span> <span class="nav-text">10. 创建动态菜单或下拉列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结："><span class="nav-number">1.0.0.11.</span> <span class="nav-text">总结：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>

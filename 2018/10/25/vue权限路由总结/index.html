@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="vue权限路由总结实现前端定义好路由，并且在路由上标记相应的权限信息 const routerMap = [   {     path: &amp;apos;/permission&amp;apos;,     component: Layout,     redirect: &amp;apos;/permission/index&amp;apos;,     alwaysShow: true, // will always">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue权限路由总结">
+<meta property="og:url" content="https://motainzhang.com/2018/10/25/vue权限路由总结/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="vue权限路由总结实现前端定义好路由，并且在路由上标记相应的权限信息 const routerMap = [   {     path: &amp;apos;/permission&amp;apos;,     component: Layout,     redirect: &amp;apos;/permission/index&amp;apos;,     alwaysShow: true, // will always">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="data:image/svg+xml;utf8,<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1280" height="655"></svg">
+<meta property="og:updated_time" content="2018-10-25T05:05:06.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue权限路由总结">
+<meta name="twitter:description" content="vue权限路由总结实现前端定义好路由，并且在路由上标记相应的权限信息 const routerMap = [   {     path: &amp;apos;/permission&amp;apos;,     component: Layout,     redirect: &amp;apos;/permission/index&amp;apos;,     alwaysShow: true, // will always">
+<meta name="twitter:image" content="data:image/svg+xml;utf8,<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1280" height="655"></svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2018/10/25/vue权限路由总结/"/>
+
+
+
+
+
+  <title>vue权限路由总结 | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2018/10/25/vue权限路由总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue权限路由总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-25T05:05:06+00:00">
+                2018-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/25/vue权限路由总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/25/vue权限路由总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h1 id="vue权限路由总结"><a href="#vue权限路由总结" class="headerlink" title="vue权限路由总结"></a>vue权限路由总结</h1><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>前端定义好路由，并且在路由上标记相应的权限信息</p>
+<pre><code>const routerMap = [
+  {
+    path: &apos;/permission&apos;,
+    component: Layout,
+    redirect: &apos;/permission/index&apos;,
+    alwaysShow: true, // will always show the root menu
+    meta: {
+      title: &apos;permission&apos;,
+      icon: &apos;lock&apos;,
+      roles: [&apos;admin&apos;, &apos;editor&apos;] // you can set roles in root nav
+    },
+    children: [{
+      path: &apos;page&apos;,
+      component: () =&gt; import(&apos;@/views/permission/page&apos;),
+      name: &apos;pagePermission&apos;,
+      meta: {
+        title: &apos;pagePermission&apos;,
+        roles: [&apos;admin&apos;] // or you can only set roles in sub nav
+      }
+    }, {
+      path: &apos;directive&apos;,
+      component: () =&gt; import(&apos;@/views/permission/directive&apos;),
+      name: &apos;directivePermission&apos;,
+      meta: {
+        title: &apos;directivePermission&apos;
+        // if do not set roles, means: this page does not require permission
+      }
+    }]
+  }]
+复制代码
+</code></pre><p>全局路由守卫每次都判断用户是否已经登录，没有登录则跳到登录页。已经登录(已经取得后台返回的用户的权限信息(角色之类的))，则判断当前要跳转的路由，用户是否有权限访问(根据路由名称到全部路由里找到对应的路由，判断用户是否具备路由上标注的权限信息(比如上面的<code>roles: [&#39;admin&#39;, &#39;editor&#39;]</code>))。没有权限则跳到事先定义好的界面(403,404之类的)。</p>
+<p>这种方式，菜单可以直接用路由生成(用户没有权限的菜单也会显示，点击跳转的时候才做权限判断)，也可以在用户登录后根据用户权限把路由过滤一遍生成菜单(菜单需要保存在vuex里)。</p>
+<blockquote>
+<p>目前<a href="https://link.juejin.im?target=https%3A%2F%2Fgithub.com%2Fiview%2Fiview-admin%2Fblob%2Fdev%2Fsrc%2Frouter%2Findex.js" target="_blank" rel="noopener">iview-admin</a>还是用的这种方式</p>
+</blockquote>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li><p>加载所有的路由，如果路由很多，而用户并不是所有的路由都有权限访问，对性能会有影响。</p>
+</li>
+<li><p>全局路由守卫里，每次路由跳转都要做权限判断。</p>
+</li>
+<li><p>菜单信息写死在前端，要改个显示文字或权限信息，需要重新编译</p>
+</li>
+<li><p>菜单跟路由耦合在一起，定义路由的时候还有添加菜单显示标题，图标之类的信息，而且路由不一定作为菜单显示，还要多加字段进行标识</p>
+</li>
+</ul>
+<h2 id="登录页与主应用分离"><a href="#登录页与主应用分离" class="headerlink" title="登录页与主应用分离"></a>登录页与主应用分离</h2><p>针对前一种实现方式的缺点，可以将登录页与主应用放到不同的页面(不在同一个vue应用实例里)。</p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p>登录成功后，进行页面跳转(真正的页面跳转，不是路由跳转)，并将用户权限传递到主应用所在页面，主应用初始化之前，根据用户权限筛选路由，筛选后的路由作为vue的实例化参数，而不是像前一种方式所有的路由都传递进去，也不需要在全局路由守卫里做权限判断了。</p>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>需要做页面跳转，不是纯粹的单页应用</li>
+<li>菜单信息写死在前端，要改个显示文字或权限信息，需要重新编译</li>
+<li>菜单跟路由耦合在一起，定义路由的时候还有添加菜单显示标题，图标之类的信息，而且路由不一定作为菜单显示，还要多加字段进行标识</li>
+</ul>
+<h2 id="使用addRoutes动态挂载路由"><a href="#使用addRoutes动态挂载路由" class="headerlink" title="使用addRoutes动态挂载路由"></a>使用<code>addRoutes</code>动态挂载路由</h2><p><code>addRoutes</code>允许在应用初始化之后，动态的挂载路由。有了这个新姿势，就不用像前一种方式那样要在应用初始化之要对路由进行筛选。</p>
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><p>应用初始化的时候先挂载不需要权限控制的路由，比如登录页，404等错误页。</p>
+<p>有个问题，<code>addRoutes</code>应该何时调用，在哪里调用</p>
+<p>登录后，获取用户的权限信息，然后筛选有权限访问的路由，再调用<code>addRoutes</code>添加路由。这个方法是可行的。但是不可能每次进入应用都需要登录，用户刷新浏览器又要登陆一次。</p>
+<p>所以<code>addRoutes</code>还是要在全局路由守卫里进行调用</p>
+<pre><code>import router from &apos;./router&apos;
+import store from &apos;./store&apos;
+import { Message } from &apos;element-ui&apos;
+import NProgress from &apos;nprogress&apos; // progress bar
+import &apos;nprogress/nprogress.css&apos;// progress bar style
+import { getToken } from &apos;@/utils/auth&apos; // getToken from cookie
+
+NProgress.configure({ showSpinner: false })// NProgress Configuration
+
+// permission judge function
+function hasPermission(roles, permissionRoles) {
+  if (roles.indexOf(&apos;admin&apos;) &gt;= 0) return true // admin permission passed directly
+  if (!permissionRoles) return true
+  return roles.some(role =&gt; permissionRoles.indexOf(role) &gt;= 0)
+}
+
+const whiteList = [&apos;/login&apos;, &apos;/authredirect&apos;]// no redirect whitelist
+
+router.beforeEach((to, from, next) =&gt; {
+  NProgress.start() // start progress bar
+  if (getToken()) { // determine if there has token
+    /* has token*/
+    if (to.path === &apos;/login&apos;) {
+      next({ path: &apos;/&apos; })
+      NProgress.done() // if current page is dashboard will not trigger    afterEach hook, so manually handle it
+    } else {
+      if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
+        store.dispatch(&apos;GetUserInfo&apos;).then(res =&gt; { // 拉取user_info
+          const roles = res.data.roles // note: roles must be a array! such as: [&apos;editor&apos;,&apos;develop&apos;]
+          store.dispatch(&apos;GenerateRoutes&apos;, { roles }).then(() =&gt; { // 根据roles权限生成可访问的路由表
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+          })
+        }).catch((err) =&gt; {
+          store.dispatch(&apos;FedLogOut&apos;).then(() =&gt; {
+            Message.error(err || &apos;Verification failed, please login again&apos;)
+            next({ path: &apos;/&apos; })
+          })
+        })
+      } else {
+        // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
+        if (hasPermission(store.getters.roles, to.meta.roles)) {
+          next()//
+        } else {
+          next({ path: &apos;/401&apos;, replace: true, query: { noGoBack: true }})
+        }
+        // 可删 ↑
+      }
+    }
+  } else {
+    /* has no token*/
+    if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+      next()
+    } else {
+      next(&apos;/login&apos;) // 否则全部重定向到登录页
+      NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
+    }
+  }
+})
+
+router.afterEach(() =&gt; {
+  NProgress.done() // finish progress bar
+})
+复制代码
+</code></pre><p>关键的代码如下</p>
+<pre><code>if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
+        store.dispatch(&apos;GetUserInfo&apos;).then(res =&gt; { // 拉取user_info
+          const roles = res.data.roles // note: roles must be a array! such as: [&apos;editor&apos;,&apos;develop&apos;]
+          store.dispatch(&apos;GenerateRoutes&apos;, { roles }).then(() =&gt; { // 根据roles权限生成可访问的路由表
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+          })
+        }).catch((err) =&gt; {
+          store.dispatch(&apos;FedLogOut&apos;).then(() =&gt; {
+            Message.error(err || &apos;Verification failed, please login again&apos;)
+            next({ path: &apos;/&apos; })
+          })
+        })
+复制代码
+</code></pre><blockquote>
+<p>上面的代码就是<a href="https://link.juejin.im?target=https%3A%2F%2Fgithub.com%2FPanJiaChen%2Fvue-element-admin" target="_blank" rel="noopener">vue-element-admin</a>的实现</p>
+</blockquote>
+<h3 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>全局路由守卫里，每次路由跳转都要做判断</li>
+<li>菜单信息写死在前端，要改个显示文字或权限信息，需要重新编译</li>
+<li>菜单跟路由耦合在一起，定义路由的时候还有添加菜单显示标题，图标之类的信息，而且路由不一定作为菜单显示，还要多加字段进行标识</li>
+</ul>
+<h2 id="菜单与路由分离，菜单由后端返回"><a href="#菜单与路由分离，菜单由后端返回" class="headerlink" title="菜单与路由分离，菜单由后端返回"></a>菜单与路由分离，菜单由后端返回</h2><p>菜单的显示标题，图片等需要随时更改，要对菜单做管理功能。</p>
+<p>后端直接根据用户权限返回可访问的菜单。</p>
+<h3 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h3><p>前端定义路由信息(标准的路由定义，不需要加其他标记字段)。</p>
+<pre><code>{
+    name: &quot;login&quot;,
+    path: &quot;/login&quot;,
+    component: () =&gt; import(&quot;@/pages/Login.vue&quot;)
+}
+复制代码
+</code></pre><p>name字段都不为空，需要根据此字段与后端返回菜单做关联。</p>
+<p>做菜单管理功能的时候，一定要有个字段与前端的路由的name字段对应上(也可以是其他字段，只要菜单能找到对应的路由或者路由能找到对应的菜单就行)，并且做唯一性校验。菜单上还需要定义权限字段，可以是一个或多个。其他信息，比如显示标题，图标，排序，锁定之类的，可以根据实际需求进行设计。</p>
+<p><img src="data:image/svg+xml;utf8,&lt;?xml version=&quot;1.0&quot;?&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;1280&quot; height=&quot;655&quot;&gt;&lt;/svg" alt=""></p>
+<p>还是在全局路由守卫里做判断</p>
+<pre><code>function hasPermission(router, accessMenu) {
+  if (whiteList.indexOf(router.path) !== -1) {
+    return true;
+  }
+  let menu = Util.getMenuByName(router.name, accessMenu);
+  if (menu.name) {
+    return true;
+  }
+  return false;
+
+}
+
+Router.beforeEach(async (to, from, next) =&gt; {
+  if (getToken()) {
+    let userInfo = store.state.user.userInfo;
+    if (!userInfo.name) {
+      try {
+        await store.dispatch(&quot;GetUserInfo&quot;)
+        await store.dispatch(&apos;updateAccessMenu&apos;)
+        if (to.path === &apos;/login&apos;) {
+          next({ name: &apos;home_index&apos; })
+        } else {
+          //Util.toDefaultPage([...routers], to.name, router, next);
+          next({ ...to, replace: true })//菜单权限更新完成,重新进一次当前路由
+        }
+      }  
+      catch (e) {
+        if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+          next()
+        } else {
+          next(&apos;/login&apos;)
+        }
+      }
+    } else {
+      if (to.path === &apos;/login&apos;) {
+        next({ name: &apos;home_index&apos; })
+      } else {
+        if (hasPermission(to, store.getters.accessMenu)) {
+          Util.toDefaultPage(store.getters.accessMenu,to, routes, next);
+        } else {
+          next({ path: &apos;/403&apos;,replace:true })
+        }
+      }
+    }
+  } else {
+    if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+      next()
+    } else {
+      next(&apos;/login&apos;)
+    }
+  }
+  let menu = Util.getMenuByName(to.name, store.getters.accessMenu);
+  Util.title(menu.title);
+});
+
+Router.afterEach((to) =&gt; {
+  window.scrollTo(0, 0);
+});
+
+复制代码
+</code></pre><p>上面代码是<a href="https://link.juejin.im?target=https%3A%2F%2Fgithub.com%2Fwjkang%2Fvue-quasar-admin" target="_blank" rel="noopener">vue-quasar-admin</a>的实现。因为没有使用<code>addRoutes</code>,每次路由跳转的时候都要判断权限，这里的判断也很简单，因为菜单的name与路由的name是一一对应的,而后端返回的菜单就已经是经过权限过滤的，所以如果根据路由name找不到对应的菜单，就表示用户有没权限访问。</p>
+<p>如果路由很多，可以在应用初始化的时候，只挂载不需要权限控制的路由。取得后端返回的菜单后，根据菜单与路由的对应关系，筛选出可访问的路由，通过<code>addRoutes</code>动态挂载。</p>
+<h3 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>菜单需要与路由做一一对应，前端添加了新功能，需要通过菜单管理功能添加新的菜单，如果菜单配置的不对会导致应用不能正常使用</li>
+<li>全局路由守卫里，每次路由跳转都要做判断</li>
+</ul>
+<h2 id="菜单与路由完全由后端返回"><a href="#菜单与路由完全由后端返回" class="headerlink" title="菜单与路由完全由后端返回"></a>菜单与路由完全由后端返回</h2><p>菜单由后端返回是可行的，但是路由由后端返回呢？看一下路由的定义</p>
+<pre><code>{
+    name: &quot;login&quot;,
+    path: &quot;/login&quot;,
+    component: () =&gt; import(&quot;@/pages/Login.vue&quot;)
+}
+复制代码
+</code></pre><p>后端如果直接返回</p>
+<pre><code>{
+    &quot;name&quot;: &quot;login&quot;,
+    &quot;path&quot;: &quot;/login&quot;,
+    &quot;component&quot;: &quot;() =&gt; import(&apos;@/pages/Login.vue&apos;)&quot;
+}
+复制代码
+</code></pre><p>这是什么鬼，明显不行。<code>() =&gt; import(&#39;@/pages/Login.vue&#39;)</code>这代码如果没出现在前端，webpack不会对<code>Login.vue</code>进行编译打包</p>
+<h3 id="实现-4"><a href="#实现-4" class="headerlink" title="实现"></a>实现</h3><p>前端统一定义路由组件，比如</p>
+<pre><code>const Home = () =&gt; import(&quot;../pages/Home.vue&quot;);
+const UserInfo = () =&gt; import(&quot;../pages/UserInfo.vue&quot;);
+export default {
+  home: Home,
+  userInfo: UserInfo
+};
+复制代码
+</code></pre><p>将路由组件定义为这种key-value的结构。</p>
+<p>后端返回格式</p>
+<pre><code>[
+      {
+        name: &quot;home&quot;,
+        path: &quot;/&quot;,
+        component: &quot;home&quot;
+      },
+      {
+        name: &quot;home&quot;,
+        path: &quot;/userinfo&quot;,
+        component: &quot;userInfo&quot;
+      }
+]
+复制代码
+</code></pre><p>在将后端返回路由通过<code>addRoutes</code>动态挂载之间，需要将数据处理一下，将component字段换为真正的组件。</p>
+<p>至于菜单与路由是否还要分离，怎么对应，可以根据实际需求进行处理。</p>
+<p>如果有嵌套路由，后端功能设计的时候，要注意添加相应的字段。前端拿到数据也要做相应的处理。</p>
+<h3 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>全局路由守卫里，每次路由跳转都要做判断</li>
+<li>前后端的配合要求更高</li>
+</ul>
+<h2 id="不使用全局路由守卫"><a href="#不使用全局路由守卫" class="headerlink" title="不使用全局路由守卫"></a>不使用全局路由守卫</h2><p>前面几种方式，除了<code>登录页与主应用分离</code>,每次路由跳转，都在全局路由守卫里做了判断。</p>
+<h3 id="实现-5"><a href="#实现-5" class="headerlink" title="实现"></a>实现</h3><p>应用初始化的时候只挂载不需要权限控制的路由</p>
+<pre><code>const constRouterMap = [
+  {
+    name: &quot;login&quot;,
+    path: &quot;/login&quot;,
+    component: () =&gt; import(&quot;@/pages/Login.vue&quot;)
+  },
+  {
+    path: &quot;/404&quot;,
+    component: () =&gt; import(&quot;@/pages/Page404.vue&quot;)
+  },
+  {
+    path: &quot;/init&quot;,
+    component: () =&gt; import(&quot;@/pages/Init.vue&quot;)
+  },
+  {
+    path: &quot;*&quot;,
+    redirect: &quot;/404&quot;
+  }
+];
+export default constRouterMap;
+复制代码
+
+import Vue from &quot;vue&quot;;
+import Router from &quot;vue-router&quot;;
+import ConstantRouterMap from &quot;./routers&quot;;
+
+Vue.use(Router);
+
+export default new Router({
+  // mode: &apos;history&apos;, // require service support
+  scrollBehavior: () =&gt; ({ y: 0 }),
+  routes: ConstantRouterMap
+});
+复制代码
+</code></pre><p>登录成功后跳到<code>/</code>路由</p>
+<pre><code>submitForm(formName) {
+      let _this=this;
+      this.$refs[formName].validate(valid =&gt; {
+        if (valid) {
+          _this.$store.dispatch(&quot;loginByUserName&quot;,{
+            name:_this.ruleForm2.name,
+            pass:_this.ruleForm2.pass
+          }).then(()=&gt;{
+            _this.$router.push({
+              path:&apos;/&apos;
+            })
+          })
+        } else {
+
+          return false;
+        }
+      });
+    }
+复制代码
+</code></pre><p>因为当前没有<code>/</code>路由，会跳到<code>/404</code></p>
+<pre><code>&lt;template&gt;
+  &lt;h1&gt;404&lt;/h1&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+  name:&apos;page404&apos;,
+  mounted(){
+    if(!this.$store.state.isLogin){
+      this.$router.replace({ path: &apos;/login&apos; });
+      return;
+    }
+    if(!this.$store.state.initedApp){
+       this.$router.replace({ path: &apos;/init&apos; });
+       return
+    }
+  }
+}
+&lt;/script&gt;
+复制代码
+</code></pre><p>404组件里判断已经登录，接着判断应用是否已经初始化(用户权限信息，可访问菜单，路由等是否已经从后端取得)。没有初始化则跳转到<code>/init</code>路由</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { getAccessMenuList } from &quot;../mock/menus&quot;;
+import components from &quot;../router/routerComponents.js&quot;;
+export default {
+  async mounted() {
+    if (!this.$store.state.isLogin) {
+      this.$router.push({ path: &quot;/login&quot; });
+      return;
+    }
+    if (!this.$store.state.initedApp) {
+      const loading = this.$loading({
+        lock: true,
+        text: &quot;初始化中&quot;,
+        spinner: &quot;el-icon-loading&quot;,
+        background: &quot;rgba(0, 0, 0, 0.7)&quot;
+      });
+      let menus = await getAccessMenuList(); //模拟从后端获取
+      var routers = [...menus];
+      for (let router of routers) {
+        let component = components[router.component];
+        router.component = component;
+      }
+      this.$router.addRoutes(routers);
+      this.$store.dispatch(&quot;setAccessMenuList&quot;, menus).then(() =&gt; {
+        loading.close();
+        this.$router.replace({
+          path: &quot;/&quot;
+        });
+      });
+      return;
+    } else {
+      this.$router.replace({
+        path: &quot;/&quot;
+      });
+    }
+  }
+};
+&lt;/script&gt;
+
+复制代码
+</code></pre><p>init组件里判断应用是否已经初始化(避免初始化后，直接从地址栏输入地址再次进入当前组件)。</p>
+<p>如果已经初始化，跳转<code>/</code>路由(如果后端返回的路由里没有定义次路由，则会跳转404)。</p>
+<p>没有初始化，则调用远程接口获取菜单和路由等，然后处理后端返回的路由，将component赋值为真正 的组件，接着调用<code>addRoutes</code>挂载新路由，最后跳转<code>/</code>路由即可。菜单的处理也是在此处，看实际 需求。</p>
+<blockquote>
+<p><a href="https://link.juejin.im?target=https%3A%2F%2Fcodesandbox.io%2Fs%2Fr02zvvlpno" target="_blank" rel="noopener">实现例子</a></p>
+</blockquote>
+<h3 id="缺点-5"><a href="#缺点-5" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>在404页面做了判断，感觉比较怪异</li>
+<li>多引入了一个init页面组件</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>比较推荐后面两种实现方式。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/25/春招面试nodejs/" rel="next" title="2018春招前端面试">
+                <i class="fa fa-chevron-left"></i> 2018春招前端面试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/25/西瓜播放器/" rel="prev" title="洞察 video 超能力系列——玩转 mp4">
+                洞察 video 超能力系列——玩转 mp4 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4"
+                alt="MotainZhang" />
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue权限路由总结"><span class="nav-number">1.</span> <span class="nav-text">vue权限路由总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.0.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">1.0.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录页与主应用分离"><span class="nav-number">1.1.</span> <span class="nav-text">登录页与主应用分离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-1"><span class="nav-number">1.1.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-1"><span class="nav-number">1.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用addRoutes动态挂载路由"><span class="nav-number">1.2.</span> <span class="nav-text">使用addRoutes动态挂载路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-2"><span class="nav-number">1.2.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-2"><span class="nav-number">1.2.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#菜单与路由分离，菜单由后端返回"><span class="nav-number">1.3.</span> <span class="nav-text">菜单与路由分离，菜单由后端返回</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-3"><span class="nav-number">1.3.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-3"><span class="nav-number">1.3.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#菜单与路由完全由后端返回"><span class="nav-number">1.4.</span> <span class="nav-text">菜单与路由完全由后端返回</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-4"><span class="nav-number">1.4.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-4"><span class="nav-number">1.4.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不使用全局路由守卫"><span class="nav-number">1.5.</span> <span class="nav-text">不使用全局路由守卫</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-5"><span class="nav-number">1.5.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-5"><span class="nav-number">1.5.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
