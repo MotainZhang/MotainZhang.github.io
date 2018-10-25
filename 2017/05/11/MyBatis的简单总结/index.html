@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MyBatis," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Mybatis是什么面向对象的世界中，数据是对象；关系型数据库中，数据时行列二元表。因此，需要一个中间映射的技术自动地实现 对象—二元表 之间的转换。MyBatis是 支持自定义 SQL、存储过程和高级映射 的持久化ORM框架。 ORMORM(Object/Relation Mapping)  持久化类与数据库表之间的映射关系 对持久化对象的操作自动转换成对关系数据库的操作  关系数据库的每一行映">
+<meta name="keywords" content="MyBatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis的简单总结">
+<meta property="og:url" content="https://motainzhang.com/2017/05/11/MyBatis的简单总结/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="Mybatis是什么面向对象的世界中，数据是对象；关系型数据库中，数据时行列二元表。因此，需要一个中间映射的技术自动地实现 对象—二元表 之间的转换。MyBatis是 支持自定义 SQL、存储过程和高级映射 的持久化ORM框架。 ORMORM(Object/Relation Mapping)  持久化类与数据库表之间的映射关系 对持久化对象的操作自动转换成对关系数据库的操作  关系数据库的每一行映">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/MyBatis%E5%8A%9F%E8%83%BD%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:updated_time" content="2018-10-25T05:28:46.821Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis的简单总结">
+<meta name="twitter:description" content="Mybatis是什么面向对象的世界中，数据是对象；关系型数据库中，数据时行列二元表。因此，需要一个中间映射的技术自动地实现 对象—二元表 之间的转换。MyBatis是 支持自定义 SQL、存储过程和高级映射 的持久化ORM框架。 ORMORM(Object/Relation Mapping)  持久化类与数据库表之间的映射关系 对持久化对象的操作自动转换成对关系数据库的操作  关系数据库的每一行映">
+<meta name="twitter:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/MyBatis%E5%8A%9F%E8%83%BD%E6%9E%B6%E6%9E%84.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2017/05/11/MyBatis的简单总结/"/>
+
+
+
+
+
+  <title>MyBatis的简单总结 | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2017/05/11/MyBatis的简单总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MyBatis的简单总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-11T18:20:08+00:00">
+                2017-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/数据库连接/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库连接</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/11/MyBatis的简单总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/05/11/MyBatis的简单总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Mybatis是什么"><a href="#Mybatis是什么" class="headerlink" title="Mybatis是什么"></a>Mybatis是什么</h2><p>面向对象的世界中，数据是对象；关系型数据库中，数据时行列二元表。因此，<strong>需要一个中间映射的技术自动地实现 对象—二元表 之间的转换</strong>。<br>MyBatis是 支持自定义 SQL、存储过程和高级映射 的持久化ORM框架。</p>
+<h2 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h2><p>ORM(Object/Relation Mapping)</p>
+<ul>
+<li>持久化类与数据库表之间的映射关系</li>
+<li>对持久化对象的操作自动转换成对关系数据库的操作</li>
+</ul>
+<p>关系数据库的每一行映射为一个对象，每一列映射为对象的属性。</p>
+<h2 id="MyBatis的功能架构"><a href="#MyBatis的功能架构" class="headerlink" title="MyBatis的功能架构"></a>MyBatis的功能架构</h2><p><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/MyBatis%E5%8A%9F%E8%83%BD%E6%9E%B6%E6%9E%84.png" alt="MyBatis的功能架构"></p>
+<h2 id="MyBatis的工作流机制"><a href="#MyBatis的工作流机制" class="headerlink" title="MyBatis的工作流机制"></a>MyBatis的工作流机制</h2><ol>
+<li>根据XML文件或者注解 加载SQL语句、参数映射、结果映射到内存</li>
+<li>应用程序调用API传入参数和SQL ID</li>
+<li>MyBatis自动生成SQL语句完成数据库访问，转换执行结果返回应用程序</li>
+</ol>
+<h2 id="MyBatis环境搭建"><a href="#MyBatis环境搭建" class="headerlink" title="MyBatis环境搭建"></a>MyBatis环境搭建</h2><p>所需Jar包：</p>
+<ul>
+<li>mybatis.jar</li>
+<li>mysql-connector-java.jar</li>
+</ul>
+<h3 id="SqlSessionFactory"><a href="#SqlSessionFactory" class="headerlink" title="SqlSessionFactory"></a>SqlSessionFactory</h3><p>每个MyBatis应用都是基于<code>SqlSessionFactory</code>实例为中心的，通过该实例可以<strong>获取 将对象操作转换成数据库sql 的session</strong>。</p>
+<p>通过创建一个XML配置文件可以完成SqlSessionFactory的配置。该XML文件包含了对MyBatis系统的核心配置，包括 后端连接数据库实例的数据源 和 一个事务管理器（transactionManager，决定事务范围和控制方式）。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"jdbc"</span> /&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- MyBatis3.0内置连接池，通过 type="POOLED"启用连接池--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql://localhost:3306/cloud_study"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"userName"</span> <span class="attr">value</span>=<span class="string">"root"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"123456"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span>        </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如上例所示，<code>&lt;transactionManager&gt;</code>标签中有一个<code>type</code>属性，属性有两种内容：</p>
+<ul>
+<li>jdbc：表示MyBatis依赖于从数据库源获得的数据库连接（connection）来管理事务的范围，即使用JDBC的提交和回滚。</li>
+<li>managed：MyBatis的事务控制交给外部的容器，比如<code>Spring</code>。</li>
+</ul>
+<h3 id="Java对象"><a href="#Java对象" class="headerlink" title="Java对象"></a>Java对象</h3><ul>
+<li>构造对象</li>
+<li>构建接口</li>
+</ul>
+<h3 id="两种方式配置对象和SQL语句的映射关系"><a href="#两种方式配置对象和SQL语句的映射关系" class="headerlink" title="两种方式配置对象和SQL语句的映射关系"></a>两种方式配置对象和SQL语句的映射关系</h3><h4 id="方式一：-在接口中通过-注解-配置"><a href="#方式一：-在接口中通过-注解-配置" class="headerlink" title="方式一： 在接口中通过 注解 配置"></a>方式一： 在接口中通过 注解 配置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GetUserInfoAnnotation</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Select</span>(<span class="string">"SELECT * FROM user WHERE id = #&#123;id&#125;"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">(<span class="keyword">int</span> id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方式二：创建Java接口和SQL语句映射关系配置文件"><a href="#方式二：创建Java接口和SQL语句映射关系配置文件" class="headerlink" title="方式二：创建Java接口和SQL语句映射关系配置文件"></a>方式二：创建Java接口和SQL语句映射关系配置文件</h4><ul>
+<li><p>XML映射文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"包的限定名+对应的接口名称"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"getUser（要与之前构建的接口的方法名一致）"</span> <span class="attr">parameterType</span>=<span class="string">"int"</span> <span class="attr">resultType</span>=<span class="string">"包的限定名+之前定义的Java对象的类名称"</span>&gt;</span></span><br><span class="line">        SELECT id, userName, crop FROM user WHERE id=#&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"addUser"</span> <span class="attr">parameterType</span>=<span class="string">"com.micro.profession.mybatis.User"</span></span></span><br><span class="line"><span class="tag">		<span class="attr">useGeneratedKeys</span>=<span class="string">"true"</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span>&gt;</span></span><br><span class="line">		INSERT INTO user(userName,corp) VALUES(#&#123;userName&#125;,#&#123;corp&#125;)</span><br><span class="line">	<span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册 ORM配置文件到 先前的XML配置文件中</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"ORM配置文件的路径"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span>   </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="完成数据库查询"><a href="#完成数据库查询" class="headerlink" title="完成数据库查询"></a>完成数据库查询</h2><p>…<br>…<br>通过注解配置和XML文件配置的 查询方式略有不同</p>
+<h2 id="MyBatis的优势和劣势"><a href="#MyBatis的优势和劣势" class="headerlink" title="MyBatis的优势和劣势"></a>MyBatis的优势和劣势</h2><ul>
+<li>优势<ul>
+<li>入门门槛低</li>
+<li>更加灵活，SQL优化</li>
+</ul>
+</li>
+<li>劣势<ul>
+<li>需要自己编写SQL，工作量大</li>
+<li>数据库移植性差</li>
+</ul>
+</li>
+</ul>
+<h2 id="用-lt-ResultMap-gt-实现复杂查询"><a href="#用-lt-ResultMap-gt-实现复杂查询" class="headerlink" title="用&lt;ResultMap&gt;实现复杂查询"></a>用<code>&lt;ResultMap&gt;</code>实现复杂查询</h2><p><a href="https://blog.csdn.net/caolipeng_918/article/details/39344783" target="_blank" rel="noopener">resultType和resultMap的区别</a><br><code>&lt;ResultMap&gt;</code>用于映射配置文件中，是MyBatis中最重要最强大的元素，可以实现复杂查询结果到复杂对象关联关系的转化。</p>
+<h3 id="lt-constructor-gt"><a href="#lt-constructor-gt" class="headerlink" title="&lt;constructor&gt;"></a><code>&lt;constructor&gt;</code></h3><p><strong>处理关联时使用</strong>，用于将<strong>结果注入到构造方法中</strong></p>
+<ul>
+<li><code>&lt;idArg&gt;</code>：ID参数，标记结果作为ID可以帮助提高整体效能</li>
+<li><code>&lt;arg&gt;</code>：注入到构造方法的一个普通结果</li>
+</ul>
+<p>例：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"getUser"</span> <span class="attr">parameterType</span>=<span class="string">"int"</span> <span class="attr">resultMap</span>=<span class="string">"UserMap(与resultMap元素的id一致)"</span>&gt;</span></span><br><span class="line">	SELECT id, userName, corp FROM user WHERE id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"UserMap"</span> <span class="attr">type</span>=<span class="string">"com.micro.profession.mybatis.resultMapTest.User"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">idArg</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">javaType</span>=<span class="string">"int"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span>=<span class="string">"userName"</span> <span class="attr">javaType</span>=<span class="string">"String"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span>=<span class="string">"corp"</span> <span class="attr">javaType</span>=<span class="string">"String"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>对象所属类的构造方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">int</span> id, String userName, String corp)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.id = id;</span><br><span class="line">	<span class="keyword">this</span>.userName = userName;</span><br><span class="line">	<span class="keyword">this</span>.corp = corp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="lt-collection-gt"><a href="#lt-collection-gt" class="headerlink" title="&lt;collection&gt;"></a><code>&lt;collection&gt;</code></h3><p>用于实现一对多的关联，<strong>对java对象中的容器进行赋值</strong></p>
+<ul>
+<li><code>&lt;id&gt;</code>：一个ID结果，标记结果作为ID可以帮助提高整体效能</li>
+<li><code>&lt;result&gt;</code>：注入到字段或JavaBean属性的普通结果</li>
+</ul>
+<p>例：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"getUser"</span> <span class="attr">parameterType</span>=<span class="string">"int"</span> <span class="attr">resultMap</span>=<span class="string">"UserMap"</span>&gt;</span></span><br><span class="line">	SELECT u.id AS userId, userName, courseName, corp, c.id AS courseId </span><br><span class="line">    FROM user u LEFT JOIN userCourse uc ON u.id=uc.user_id </span><br><span class="line">        LEFT JOIN course c ON c.id=uc.course_id </span><br><span class="line">    WHERE u.id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"UserMap"</span> <span class="attr">type</span>=<span class="string">"com.micro.profession.mybatis.resultMapTest.User"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">idArg</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">javaType</span>=<span class="string">"int"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span>=<span class="string">"userName"</span> <span class="attr">javaType</span>=<span class="string">"String"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span>=<span class="string">"corp"</span> <span class="attr">javaType</span>=<span class="string">"String"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">"courses（需要和Java对象中的容器变量名一致）"</span></span></span><br><span class="line"><span class="tag">		<span class="attr">ofType</span>=<span class="string">"com.micro.profession.mybatis.resultMapTest.Course"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id（ofType中的变量名）"</span> <span class="attr">column</span>=<span class="string">"courseId"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"courseName"</span> <span class="attr">column</span>=<span class="string">"courseName"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>对象所属类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">private</span> String userName;</span><br><span class="line">	<span class="keyword">private</span> String corp;</span><br><span class="line">	<span class="keyword">private</span> List&lt;Course&gt; courses;<span class="comment">//collection的property值要和该变量名一致 </span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="lt-association-gt"><a href="#lt-association-gt" class="headerlink" title="&lt;association&gt;"></a><code>&lt;association&gt;</code></h3><p>用于实现复杂类型之间的关联，如关联的容器之中嵌套着对象</p>
+<ul>
+<li><code>&lt;id&gt;</code>：一个ID结果标记结果作为ID可以提高整体效能</li>
+<li><code>&lt;result&gt;</code>：注入到字段或JavaBean属性的普通结果</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"getUser"</span> <span class="attr">parameterType</span>=<span class="string">"int"</span> <span class="attr">resultMap</span>=<span class="string">"UserMap"</span>&gt;</span></span><br><span class="line">	SELECT u.id AS userId, userName, courseName, corp, c.id AS courseId </span><br><span class="line">	FROM user u LEFT JOIN userCourse uc ON u.id = uc.user_id</span><br><span class="line">		LEFT JOIN course c on c.id = uc.course_id </span><br><span class="line">		LEFT JOIN teacher ON teacher.id=c.teacher_id </span><br><span class="line">	WHERE u.id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"UserMap"</span> <span class="attr">type</span>=<span class="string">"com.micro.profession.mybatis.resultMapTest.User"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor</span>&gt;</span></span><br><span class="line">		...</span><br><span class="line">	<span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">"courses"</span></span></span><br><span class="line"><span class="tag">		<span class="attr">ofType</span>=<span class="string">"com.micro.profession.mybatis.resultMapTest.Course"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"courseId"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"courseName"</span> <span class="attr">column</span>=<span class="string">"courseName"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">"teacher"</span> <span class="attr">column</span>=<span class="string">"teacher_id"</span></span></span><br><span class="line"><span class="tag">			<span class="attr">javaType</span>=<span class="string">"com.micro.profession.mybatis.resultMapTest.Teacher"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id（javaType中的变量名）"</span> <span class="attr">column</span>=<span class="string">"teacherId"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"teacherName（javaType中的变量名）"</span> <span class="attr">column</span>=<span class="string">"teacherName"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Course类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Course</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String courseName;</span><br><span class="line">    <span class="keyword">private</span> Teacher teacher;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="DataSource"><a href="#DataSource" class="headerlink" title="DataSource"></a>DataSource</h2><p>MyBatis3.0内置连接池，SqlSessionFactory的配置中，通过<code>type=&quot;POOLED&quot;</code>即可启用连接池。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"jdbc"</span> /&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- MyBatis3.0内置连接池，通过 type="POOLED"启用连接池--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql://localhost:3306/cloud_study"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"userName"</span> <span class="attr">value</span>=<span class="string">"root"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"123456"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span>        </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="数据库连接声明周期"><a href="#数据库连接声明周期" class="headerlink" title="数据库连接声明周期"></a>数据库连接声明周期</h3><p><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="数据库连接生命周期"></p>
+<h3 id="连接池常用配置选项"><a href="#连接池常用配置选项" class="headerlink" title="连接池常用配置选项"></a>连接池常用配置选项</h3><ul>
+<li><code>poolMaximumActiveConnections</code></li>
+<li><code>poolMaximumIdleConnerctions</code></li>
+<li><code>poolMaximumCheckoutTime</code></li>
+<li><code>poolTimeToWait</code></li>
+<li><code>poolPingEnabled</code></li>
+<li><code>poolPingQuery</code></li>
+<li><code>poolPingConnectionsNotUsedFor</code></li>
+</ul>
+<hr>
+<h2 id="Spring与MyBatis、数据库连接池的整合"><a href="#Spring与MyBatis、数据库连接池的整合" class="headerlink" title="Spring与MyBatis、数据库连接池的整合"></a>Spring与MyBatis、数据库连接池的整合</h2><p>所需Jar包：</p>
+<ul>
+<li>mybatis-spring.jar</li>
+<li>mybatis.jar</li>
+<li>mysql-connector-java.jar</li>
+<li>spring-jdbc.jar(访问mysql基于jdbc的驱动)</li>
+<li>commons-dbcp2.jar</li>
+<li>commons-pool2.jar</li>
+<li>commons-logging.jar</li>
+</ul>
+<h3 id="在resources目录下创建存放-数据库连接参数-的文件db-properties"><a href="#在resources目录下创建存放-数据库连接参数-的文件db-properties" class="headerlink" title="在resources目录下创建存放 数据库连接参数 的文件db.properties"></a>在<code>resources</code>目录下创建存放 数据库连接参数 的文件<code>db.properties</code></h3><p>文件内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">driverClassName=com.mysql.jdbc.Driver</span><br><span class="line">url=数据库地址</span><br><span class="line">username=访问数据库的用户名</span><br><span class="line">password=访问密码</span><br></pre></td></tr></table></figure></p>
+<h3 id="定义连接池相关的BasicDataSource-Bean"><a href="#定义连接池相关的BasicDataSource-Bean" class="headerlink" title="定义连接池相关的BasicDataSource Bean"></a>定义连接池相关的BasicDataSource Bean</h3><p>跟Spring相关的XML配置文件中添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp2.BasicDataSource"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"$&#123;driverClassName&#125;"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;url&#125;"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;username&#125;"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;password&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Maven项目，application-context.xml、db.properties文件均放置在src/main/resources目录下；Tomcat部署项目，src/main/resources目录下的配置文件默认位置为：{项目名}/WEB-INF/classes，而Spring却在项目根目录下寻找，肯定找不到，因此，需要指定classpath目录下寻找。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:db.properties"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="定义sqlSessionFactoryBean"><a href="#定义sqlSessionFactoryBean" class="headerlink" title="定义sqlSessionFactoryBean"></a>定义sqlSessionFactoryBean</h3><p>跟Spring相关的XML配置文件中添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sqlSessionFactory"</span> <span class="attr">class</span>=<span class="string">"org.mybatis.spring.SqlSessionFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="定义Mapper"><a href="#定义Mapper" class="headerlink" title="定义Mapper"></a>定义Mapper</h3><p>如前所述,两种方式：</p>
+<h4 id="方式一：创建Java接口，在接口中通过-注解-配置"><a href="#方式一：创建Java接口，在接口中通过-注解-配置" class="headerlink" title="方式一：创建Java接口，在接口中通过 注解 配置"></a>方式一：创建Java接口，在接口中通过 注解 配置</h4><p>需要在Spring相关的XML配置文件中添加如下内容：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">...</span></span></span><br><span class="line"><span class="tag">        <span class="attr">xmlns:mybatis</span>=<span class="string">"http://mybatis.org/schema/mybatis-spring"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"</span></span></span><br><span class="line"><span class="tag"><span class="string">        ...</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://mybatis.org/schema/mybatis-spring</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://mybatis.org/schema/mybatis-spring.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">mybatis:scan</span> <span class="attr">base-package</span>=<span class="string">"包名，搜索相关annotation的范围"</span> /&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="方式二：创建Java接口和SQL语句映射关系配置文件-1"><a href="#方式二：创建Java接口和SQL语句映射关系配置文件-1" class="headerlink" title="方式二：创建Java接口和SQL语句映射关系配置文件"></a>方式二：创建Java接口和SQL语句映射关系配置文件</h4><p>与单纯的Mybatis配置不同，-写好XML映射文件之后，需要在Spring相关的XML配置文件中添加bean：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"UserMapper"</span> <span class="attr">class</span>=<span class="string">"org.mybatis.spring.mapper.MapperFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mapperInterface"</span> <span class="attr">value</span>=<span class="string">"接口的具体包路径"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sqlSessionFactory"</span> <span class="attr">ref</span>=<span class="string">"sqlSessionFactory"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="使用Mapper"><a href="#使用Mapper" class="headerlink" title="使用Mapper"></a>使用Mapper</h3><p>通过@Autowired 或 @Resource 自动装配</p>
+<h3 id="SqlSessionTemplate"><a href="#SqlSessionTemplate" class="headerlink" title="SqlSessionTemplate"></a>SqlSessionTemplate</h3><p>…</p>
+<h3 id="MyBatis和Spring整合之后，如何使用事务管理"><a href="#MyBatis和Spring整合之后，如何使用事务管理" class="headerlink" title="MyBatis和Spring整合之后，如何使用事务管理"></a>MyBatis和Spring整合之后，如何使用事务管理</h3><p>见 事务的简单总结 一文。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MyBatis/" rel="tag"># MyBatis</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/08/web.xml配置详解/" rel="next" title="web.xml配置详解">
+                <i class="fa fa-chevron-left"></i> web.xml配置详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/18/File-separator和文件分隔符的区别/" rel="prev" title="File.separator和文件层级分隔符的区别">
+                File.separator和文件层级分隔符的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4"
+                alt="MotainZhang" />
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis是什么"><span class="nav-number">1.</span> <span class="nav-text">Mybatis是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ORM"><span class="nav-number">2.</span> <span class="nav-text">ORM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的功能架构"><span class="nav-number">3.</span> <span class="nav-text">MyBatis的功能架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的工作流机制"><span class="nav-number">4.</span> <span class="nav-text">MyBatis的工作流机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis环境搭建"><span class="nav-number">5.</span> <span class="nav-text">MyBatis环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlSessionFactory"><span class="nav-number">5.1.</span> <span class="nav-text">SqlSessionFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java对象"><span class="nav-number">5.2.</span> <span class="nav-text">Java对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两种方式配置对象和SQL语句的映射关系"><span class="nav-number">5.3.</span> <span class="nav-text">两种方式配置对象和SQL语句的映射关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方式一：-在接口中通过-注解-配置"><span class="nav-number">5.3.1.</span> <span class="nav-text">方式一： 在接口中通过 注解 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式二：创建Java接口和SQL语句映射关系配置文件"><span class="nav-number">5.3.2.</span> <span class="nav-text">方式二：创建Java接口和SQL语句映射关系配置文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成数据库查询"><span class="nav-number">6.</span> <span class="nav-text">完成数据库查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的优势和劣势"><span class="nav-number">7.</span> <span class="nav-text">MyBatis的优势和劣势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-lt-ResultMap-gt-实现复杂查询"><span class="nav-number">8.</span> <span class="nav-text">用&lt;ResultMap&gt;实现复杂查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lt-constructor-gt"><span class="nav-number">8.1.</span> <span class="nav-text">&lt;constructor&gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lt-collection-gt"><span class="nav-number">8.2.</span> <span class="nav-text">&lt;collection&gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lt-association-gt"><span class="nav-number">8.3.</span> <span class="nav-text">&lt;association&gt;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataSource"><span class="nav-number">9.</span> <span class="nav-text">DataSource</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库连接声明周期"><span class="nav-number">9.1.</span> <span class="nav-text">数据库连接声明周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接池常用配置选项"><span class="nav-number">9.2.</span> <span class="nav-text">连接池常用配置选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring与MyBatis、数据库连接池的整合"><span class="nav-number">10.</span> <span class="nav-text">Spring与MyBatis、数据库连接池的整合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在resources目录下创建存放-数据库连接参数-的文件db-properties"><span class="nav-number">10.1.</span> <span class="nav-text">在resources目录下创建存放 数据库连接参数 的文件db.properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义连接池相关的BasicDataSource-Bean"><span class="nav-number">10.2.</span> <span class="nav-text">定义连接池相关的BasicDataSource Bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义sqlSessionFactoryBean"><span class="nav-number">10.3.</span> <span class="nav-text">定义sqlSessionFactoryBean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义Mapper"><span class="nav-number">10.4.</span> <span class="nav-text">定义Mapper</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方式一：创建Java接口，在接口中通过-注解-配置"><span class="nav-number">10.4.1.</span> <span class="nav-text">方式一：创建Java接口，在接口中通过 注解 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式二：创建Java接口和SQL语句映射关系配置文件-1"><span class="nav-number">10.4.2.</span> <span class="nav-text">方式二：创建Java接口和SQL语句映射关系配置文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Mapper"><span class="nav-number">10.5.</span> <span class="nav-text">使用Mapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlSessionTemplate"><span class="nav-number">10.6.</span> <span class="nav-text">SqlSessionTemplate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis和Spring整合之后，如何使用事务管理"><span class="nav-number">10.7.</span> <span class="nav-text">MyBatis和Spring整合之后，如何使用事务管理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
