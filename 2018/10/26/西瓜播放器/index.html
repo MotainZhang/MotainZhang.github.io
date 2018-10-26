@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="洞察 video 超能力系列——玩转 mp4用技术提升美好事物发生的概率 Technologically, for greater probability to be happy.  前言只要在 HTML5 中使用过视频播放的同学对 video 标签一定不会陌生，不过很多同学只使用了 video 的基础功能，实际上 video 拥有强大潜能的，只要姿势正确就能让其拥有超能力。不妨从下面几个场景来逐">
+<meta property="og:type" content="article">
+<meta property="og:title" content="洞察 video 超能力系列——玩转 mp4">
+<meta property="og:url" content="https://motainzhang.com/2018/10/26/西瓜播放器/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="洞察 video 超能力系列——玩转 mp4用技术提升美好事物发生的概率 Technologically, for greater probability to be happy.  前言只要在 HTML5 中使用过视频播放的同学对 video 标签一定不会陌生，不过很多同学只使用了 video 的基础功能，实际上 video 拥有强大潜能的，只要姿势正确就能让其拥有超能力。不妨从下面几个场景来逐">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cbbb5a15b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cbbcec4ef?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cd48a0884?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cd46f50ae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cd4990b8e?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="data:image/svg+xml;utf8,<?xml version=" 1.0"?=""><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1080" height="551">
+<meta property="og:image" content="data:image/svg+xml;utf8,<?xml version=" 1.0"?=""/><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1080" height="468">
+<meta property="og:image" content="data:image/svg+xml;utf8,<?xml version=" 1.0"?=""/><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="136" height="136">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98ced13fa47?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"/>
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cf079b8bd?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"/>
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cf4a14e2c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"/>
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cfcfa6bc3?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"/>
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cfdee42eb?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"/>
+<meta property="og:updated_time" content="2018-10-26T09:16:14.052Z"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="洞察 video 超能力系列——玩转 mp4"/>
+<meta name="twitter:description" content="洞察 video 超能力系列——玩转 mp4用技术提升美好事物发生的概率 Technologically, for greater probability to be happy.  前言只要在 HTML5 中使用过视频播放的同学对 video 标签一定不会陌生，不过很多同学只使用了 video 的基础功能，实际上 video 拥有强大潜能的，只要姿势正确就能让其拥有超能力。不妨从下面几个场景来逐"/>
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cbbb5a15b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"/>
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2018/10/26/西瓜播放器/"/>
+
+
+
+
+
+  <title>洞察 video 超能力系列——玩转 mp4 | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</svg></svg></svg></head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2018/10/26/西瓜播放器/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">洞察 video 超能力系列——玩转 mp4</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-26T09:16:14+00:00">
+                2018-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/26/西瓜播放器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/26/西瓜播放器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="洞察-video-超能力系列——玩转-mp4"><a href="#洞察-video-超能力系列——玩转-mp4" class="headerlink" title="洞察 video 超能力系列——玩转 mp4"></a>洞察 video 超能力系列——玩转 mp4</h1><p><em>用技术提升美好事物发生的概率</em></p>
+<p><em>Technologically, for greater probability to be happy.</em></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cbbb5a15b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>只要在 HTML5 中使用过视频播放的同学对 video 标签一定不会陌生，不过很多同学只使用了 video 的基础功能，实际上 video 拥有强大潜能的，只要姿势正确就能让其拥有超能力。不妨从下面几个场景来逐渐了解下video 未曾被发掘的神秘空间：</p>
+<ul>
+<li><p>清晰度无缝切换</p>
+</li>
+<li><p>节省视频流量</p>
+</li>
+</ul>
+<h2 id="清晰度无缝切换"><a href="#清晰度无缝切换" class="headerlink" title="清晰度无缝切换"></a>清晰度无缝切换</h2><p>点播领域里 mp4 是最普遍、兼容性最好的视频容器，不过 mp4 也有它的局限性，比如常见的清晰度切换，我们是无法像youtube那样做到无缝切换的。我们可以看下普通的mp4播放的网络请求和youtube视频播放的网络请求的区别。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cbbcec4ef?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>图1.1 普通mp4的下载请求过程</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cd48a0884?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="">  </p>
+<p>图1.2 Youtube视频下载请求过程  </p>
+<p>这两张图不难看出，在默认情况下 mp4 使用一次 http 请求所有的视频数据，Youtube 则分次请求。当然这个描述很不专业，但确实形象。造成这种差异的是 video 不支持流式的视频数据，Youtube 采用的是流式的视频容器 webm，而 mp4 是非流式的。那如何解释清楚流式的视频数据呢，从专业的角度三言两语很难说清楚，但用大白话翻译过来就是流式的视频数据支持分段独立播放，非流式的不可以。换句话说一个10M的视频文件，流式的视频可以把0~1M的数据请求回来单独播放，但是非流式的不可以。  </p>
+<p>上面我们描述了视频格式的不同，接下来我们要说的是第一张图中的视频加载是浏览器来控制的，通过给 video 的 src 属性配置视频地址，触发播放之后浏览器就会开始下载了，JS干涉不了。而 Youtube 的视频加载是通过JS来控制的，各位可以再次看下第二张图的网络请求类型：xhr，足以证明这一点。</p>
+<p>上面两点搞清楚之后我们就该说下清晰度切换的事情了。这个需求大家都不陌生，但是直接使用 mp4 格式做无缝清晰度切换，难度还挺大的。先解释下“无缝清晰度切换”的概念：从播放一个分辨率的视频到另一个分辨率且保证画面、声音不停顿的平滑切换过程。了解了这个概念，大家应该知道了用 video 无缝切换 mp4 有多难。一方面，video 是不支持流式的视频格式的，一方面，video 的加载是不受JS控制的。通过切换 video 的 src 属性，必然会导致画面中断、重新请求视频数据等。有的同学想到说利用两个 video 再结合 z-index 来搞，但是当你生成另一个video去加载视频的时候，无法保证两个画面是严格一致的，即使将原来的画面暂停到一个时刻，用另一个视频通过 currentTime 属性与之同步，切换仍然看到画面闪烁，基本无法和 Youtube 无缝切换的体验匹敌。而且还会造成更多流量的浪费，背后的原因大家可以研究下 mp4 容器和 webm 容器的异同，也可以看下视频解码相关的文章。</p>
+<p>还有一种方法就是将 mp4 格式统统转码到流式的视频格式比如 hls、webm 等。不过这种看上去可行的方式实际上会带来很大的成本开销，如将大量视频做转码会消耗高昂的机器资源、双倍存储的费用、CDN的双倍费用等等。其实我们也是在这种背景下研究出来新的技术问题解决清晰度无缝切换的。</p>
+<p>首先，我们改变对 mp4 视频的播放流程，不再直接使用 video 的 src 来播放，因为我们没有任何可以操作的空间。video不仅支持 src 属性还支持 Blob 对象，我们就是利用后者。播放的流程如下：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cd46f50ae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>图1.3 mp4 视频新播放流程</p>
+<ol>
+<li><p>来请求 mp4 视频数据，这样可以结合视频 Range 服务，做到精确加载。</p>
+</li>
+<li><p>编写解析器将加载回来的部分 mp4 视频数据进行解复用</p>
+</li>
+<li><p>将解复用的视频数据转成 fmp4 格式并传递给 MediaSource</p>
+</li>
+<li><p>使用 video 进行解码完成播放</p>
+</li>
+</ol>
+<p>然后在做清晰度切换的时候流程如下：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cd4990b8e?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>图1.4 mp4视频清晰度切换原理示意图  </p>
+<ol>
+<li><p>播放视频A，过程同上</p>
+</li>
+<li><p>在某个时刻，用户切换到播放视频B，首先解析B的索引文件（moov），反向计算mp4的range区间</p>
+</li>
+<li><p>加载B的视频区间数据</p>
+</li>
+<li><p>解复用</p>
+</li>
+<li><p>把数据转换成fmp4格式并传递给MediaSource</p>
+</li>
+<li><p>删除A的部分Buffer</p>
+</li>
+<li><p>在下一个关键帧自动完成画质的切换</p>
+</li>
+</ol>
+<p><img src="data:image/svg+xml;utf8,&lt;?xml version=&quot;1.0&quot;?&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;1080&quot; height=&quot;551&quot;&gt;&lt;/svg" alt=""></p>
+<p>图1.5 mp4视频清晰度切换流程示意图</p>
+<p>这个过程看上去比较繁琐，但是所有的操作都是在浏览器端完成，也就是说都是JS来实现的。这样之前说的所有成本问题都不存在，还能做到youtube相同体验的无缝切换。如果大家也想使用这个功能不需要自己再去实现一遍上述流程，可以使用如下代码：</p>
+<p><img src="data:image/svg+xml;utf8,&lt;?xml version=&quot;1.0&quot;?&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;1080&quot; height=&quot;468&quot;&gt;&lt;/svg" alt=""></p>
+<p>如果对这段代码有什么疑惑，或者想深入了解下它背后是如何实现的，可以参考<a href="https://link.juejin.im?target=https%3A%2F%2Fgithub.com%2Fbytedance%2Fxgplayer" target="_blank" rel="noopener">github.com/bytedance/x…</a></p>
+<p>长按识别二维码 ⬇️</p>
+<p><img src="data:image/svg+xml;utf8,&lt;?xml version=&quot;1.0&quot;?&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;136&quot; height=&quot;136&quot;&gt;&lt;/svg" alt=""></p>
+<h2 id="节省视频流量"><a href="#节省视频流量" class="headerlink" title="节省视频流量"></a>节省视频流量</h2><p>使用 video 的同学基本上都是这样用的，如下：</p>
+<ol>
+<li>利用src属性</li>
+</ol>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98ced13fa47?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>  2. 利用source标签</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cf079b8bd?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>这样就可以播放视频了，不过前面我们讲过这样使用 video ，视频的加载是受浏览器控制的，可以看下浏览器在视频刚开始播放的时候下载了多少数据：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cf4a14e2c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>图2.1 video默认下载截图</p>
+<p>我随便找了个视频，大家看下视频总长度是 02:08,在播放到 00:05 的时候，浏览器已经下载到 01:30 了，如果用户终止观看，下载的视频就这样被浪费掉了。当然，如果不断的 seek 也会造成较多的流量浪费。按照我们之前的统计在短视频领域，用户 seek 的频率在 80%，所以这部分流量是可以节省掉的。具体原理如下:</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cfcfa6bc3?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>图2.2 播放器加载视频原理</p>
+<ol>
+<li><p>设置每次加载的数据包大小</p>
+</li>
+<li><p>设置预加载时长</p>
+</li>
+<li><p>开启加载队列，完成第一次数据包下载，判断缓冲时间和预加载时长是否满足，不满足请求下一个数据包</p>
+</li>
+</ol>
+<p>具体实现代码如下：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/6/1646f98cfdee42eb?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>这样就实现了视频在播放过程中永远只预加载10秒的数据，进而保证节省流量。</p>
+<p>了解超能力西瓜播放器是如何炼成的： <a href="https://link.juejin.im?target=http%3A%2F%2Fh5player.bytedance.com" target="_blank" rel="noopener">h5player.bytedance.com</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/26/vue权限路由总结/" rel="next" title="vue权限路由总结">
+                <i class="fa fa-chevron-left"></i> vue权限路由总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4" alt="MotainZhang">
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#洞察-video-超能力系列——玩转-mp4"><span class="nav-number">1.</span> <span class="nav-text">洞察 video 超能力系列——玩转 mp4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清晰度无缝切换"><span class="nav-number">1.2.</span> <span class="nav-text">清晰度无缝切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节省视频流量"><span class="nav-number">1.3.</span> <span class="nav-text">节省视频流量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>

@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DispatcherServlet,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="为什么需要Spring MVC框架 需要一个框架来处理路由（映射） 需要一个框架来处理MVC(前端、后端、数据处理的分离)  DispatcherServletSpring MVC 是以一个servlet为核心来构建的——DispatcherServlet。 DispatcherServlet处理请求与相应的示意图： 工作流程：  客户端发送请求到DispatcherServlet Dispatc">
+<meta name="keywords" content="DispatcherServlet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC的简单总结">
+<meta property="og:url" content="https://motainzhang.com/2018/05/14/Spring-MVC的简单总结/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="为什么需要Spring MVC框架 需要一个框架来处理路由（映射） 需要一个框架来处理MVC(前端、后端、数据处理的分离)  DispatcherServletSpring MVC 是以一个servlet为核心来构建的——DispatcherServlet。 DispatcherServlet处理请求与相应的示意图： 工作流程：  客户端发送请求到DispatcherServlet Dispatc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/DispatcherServlet%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/Spring%E5%BC%82%E5%B8%B8%E8%BD%AC%E6%8D%A2%E4%B8%BAHTTP%E7%8A%B6%E6%80%81%E7%A0%81.png">
+<meta property="og:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/flash%E5%B1%9E%E6%80%A7%E8%B7%A8%E9%87%8D%E5%AE%9A%E5%90%91%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE.png">
+<meta property="og:updated_time" content="2018-10-26T09:16:14.048Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring MVC的简单总结">
+<meta name="twitter:description" content="为什么需要Spring MVC框架 需要一个框架来处理路由（映射） 需要一个框架来处理MVC(前端、后端、数据处理的分离)  DispatcherServletSpring MVC 是以一个servlet为核心来构建的——DispatcherServlet。 DispatcherServlet处理请求与相应的示意图： 工作流程：  客户端发送请求到DispatcherServlet Dispatc">
+<meta name="twitter:image" content="https://github.com/Hunter1023/blogSource/raw/master/source/image/DispatcherServlet%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2018/05/14/Spring-MVC的简单总结/">
+
+
+
+
+
+  <title>Spring MVC的简单总结 | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2018/05/14/Spring-MVC的简单总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring MVC的简单总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T19:39:51+00:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/Spring-MVC框架/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring MVC框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/14/Spring-MVC的简单总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/05/14/Spring-MVC的简单总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="为什么需要Spring-MVC框架"><a href="#为什么需要Spring-MVC框架" class="headerlink" title="为什么需要Spring MVC框架"></a>为什么需要Spring MVC框架</h2><ul>
+<li>需要一个框架来处理路由（映射）</li>
+<li>需要一个框架来处理MVC(前端、后端、数据处理的分离)</li>
+</ul>
+<h2 id="DispatcherServlet"><a href="#DispatcherServlet" class="headerlink" title="DispatcherServlet"></a>DispatcherServlet</h2><p><strong>Spring MVC 是以一个servlet为核心来构建的——<code>DispatcherServlet</code></strong>。</p>
+<p>DispatcherServlet处理请求与相应的示意图：<br><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/DispatcherServlet%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E4%B8%8E%E7%9B%B8%E5%BA%94%E7%9A%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt=""></p>
+<p>工作流程：</p>
+<ol>
+<li>客户端发送请求到<code>DispatcherServlet</code></li>
+<li><code>DispatcherServlet</code>查询一个或多个处理器映射（handler mapping）来确定发送给对应的<code>Controller</code></li>
+<li>Controller处理发来的请求（设计良好的Controller本身只处理很少的工作，将业务逻辑委托给一个或多个service对象进行处理）</li>
+<li>Controller进行逻辑处理得到的内容称为模型（model），Controller将模型数据打包，并标示出用于渲染输出的视图名，发还给<code>DispatcherServlet</code></li>
+<li><code>DispatcherServlet</code>用<code>view resolver</code>将逻辑视图名匹配为一个特定的视图进行实现。</li>
+</ol>
+<h3 id="如何使用DispatcherServlet"><a href="#如何使用DispatcherServlet" class="headerlink" title="如何使用DispatcherServlet"></a>如何使用DispatcherServlet</h3><ol>
+<li><p>添加相关依赖</p>
+<ul>
+<li><code>spring-webmvc</code></li>
+<li><code>javax.servlet-api</code>(待确认是否需要)</li>
+</ul>
+</li>
+<li><p>在<code>web.xml</code>文件中添加如下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>自定义名称<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:[servlet-name]-servlet.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>与上边定义的name相同<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/api/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还需要创建一个<code>[servlet-name]-servlet.xml</code>文件，来定义该Servlet相关（MVC）的内容：</p>
+</li>
+</ol>
+<ul>
+<li>HandlerMapping(可以不定义，有默认配置)</li>
+<li>Controllers(相对于在xml中定义，偏向用annotation来定义，然后开启自动发现机制)</li>
+<li>View解析相关（也有默认配置，偏向进行显式的具体配置）</li>
+</ul>
+<h2 id="WebApplicationContext"><a href="#WebApplicationContext" class="headerlink" title="WebApplicationContext"></a>WebApplicationContext</h2><p>不同于<a href="/2018/05/12/IoC容器">IoC容器</a>一文中介绍的，在非Web场景下，需要通过<code>ClassPathXmlApplicationContext</code>或<code>FileSystemXmlApplicationContext</code>来定义IoC容器。SpringMVC框架下，会根据DispatcherServlet的配置，自动生成ApplicationContext。</p>
+<h2 id="ContextLoaderListener"><a href="#ContextLoaderListener" class="headerlink" title="ContextLoaderListener"></a>ContextLoaderListener</h2><p><strong>我们希望<code>DispatcherServlet</code>加载包含Web组件的bean（如Controller、view resolver以及handler mapping）；<code>ContextLoaderListener</code>加载其他bean（驱动应用后端的中间层和数据层组件）</strong></p>
+<p>在web.xml文件中添加如下内容：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>applicationContext配置文件的路径.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><code>applicationContext配置文件的路径.xml</code>用来定义DAO、Service相关的内容。</p>
+<h2 id="启用Spring-MVC"><a href="#启用Spring-MVC" class="headerlink" title="启用Spring MVC"></a>启用Spring MVC</h2><p>Spring MVC相关配置文件中，添加如下内容：<br><code>&lt;mvc:annotation-driven /&gt;</code></p>
+<h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><h3 id="定义Controller"><a href="#定义Controller" class="headerlink" title="定义Controller"></a>定义Controller</h3><ul>
+<li>在上述的<code>[servlet-name]-servlet.xml</code>文件中，添加：<br><code>&lt;context:component-scan base-package=&quot;查找的范围&quot;&gt;</code></li>
+<li>在具体的Java类上加上@Controller的注释，就会作为一个Bean（作用和@Component一样，只是更具备阅读性）被扫描到<br>例子：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span> <span class="comment">//annotation声明Controller即可</span></span><br><span class="line"><span class="meta">@ResultMapping</span>(<span class="string">"/"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> ...</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="声明-ResultMapping"><a href="#声明-ResultMapping" class="headerlink" title="声明@ResultMapping"></a>声明@ResultMapping</h3><p>@ResultMapping有很多属性：</p>
+<ul>
+<li>value&amp;path：路径（没有其他参数时，可以直接写 “路径”，也可以接受String类型的数组）</li>
+<li>method：请求方法（GET、POST等）</li>
+<li>params：请求参数</li>
+<li>headers：请求头<br>…</li>
+</ul>
+<p>如：<br><code>@ResultMapping({&quot;/&quot;, &quot;/homepage&quot;})</code></p>
+<h2 id="view相关"><a href="#view相关" class="headerlink" title="view相关"></a>view相关</h2><p>在Spring MVC的xml配置文件中，添加视图解析器<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.ContentNegotiatingViewResolver"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"viewResolvers"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">               <span class="comment">&lt;!-- 展示JSP --&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"viewResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/JSP"</span>/&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">               <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultViews"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">               <span class="comment">&lt;!-- 展示Json --&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.json.MappingJackson2JsonView"</span>/&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>函数参数如：Modle、ViewAndModel、Map都是存放视图相关属性的k-v键值对，为视图模型。<br><strong>当视图是JSP时，模型数据会作为请求属性放到请求中</strong>。</p>
+<h3 id="JSP视图"><a href="#JSP视图" class="headerlink" title="JSP视图"></a>JSP视图</h3><p>Spring提供了两种支持JSP视图的方式：</p>
+<ul>
+<li><code>InternalResourceViewResolver</code>会将视图名解析为JSP文件。如果在JSP页面中使用了JSP标准标签库（JSTL）,通过设置，**视图可以被解析为JstlView形式的JSP文件，从而将JSTL本地化和资源bundle变量暴露给JSTL的格式化（formatting）和信息（message）标签。</li>
+<li>Spring提供了两个JSP标签库，一个用于表单到模型的绑定，另一个提供通用的工具类特性。</li>
+</ul>
+<h4 id="解析JSTL视图"><a href="#解析JSTL视图" class="headerlink" title="解析JSTL视图"></a>解析JSTL视图</h4><p>如果JSP使用JSTL标签来处理格式化和信息的话，我们希望将视图解析为JSTLView。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 展示JSP --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"viewResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/JSP"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"viewClass"</span> <span class="attr">value</span>=<span class="string">"org.springframework.web.servlet.view.JstlView"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="使用Spring的JSP库"><a href="#使用Spring的JSP库" class="headerlink" title="使用Spring的JSP库"></a>使用Spring的JSP库</h4><h5 id="将表单绑定到模型上"><a href="#将表单绑定到模型上" class="headerlink" title="将表单绑定到模型上"></a>将表单绑定到模型上</h5><p>　　将表单绑定到模型上，表单就可以预先填充值，并在表单提交失败后，展现校验错误。<br>　　<strong>表单绑定JSP标签库的标签会绑定模型中的一个对象</strong>，能够根据模型对象中对象的属性填充值。还提供了一个为用户展现错误的标签，能将错误信息渲染到最终的HTML之中。<br>　　使用表单绑定库，需要在JSP页面声明：<br>　　<code>&lt;$@ taglib uri=&quot;http://www.springframework.org/tags/form&quot; prefix=&quot;sf&quot; %&gt;</code>  前缀为自定义，sf意为spring form。<br>包含的标签</p>
+<h5 id="展示错误说明"><a href="#展示错误说明" class="headerlink" title="展示错误说明"></a>展示错误说明</h5><p>如果存在校验错误，请求中会包含错误的详细信息。为了将错误的信息从视图模型中取出并展示给用户，需要用到<code>&lt;sf:errors&gt;</code>。<br>例：<code>&lt;sf:errors path=&quot;username&quot; /&gt;</code><br><code>&lt;sf:errors&gt;</code>的path属性用来指定要显示 绑定的模型对象中某个属性 的错误。<strong>只有发生错误，该标签才会渲染内容到HTML</strong>。</p>
+<h5 id="展示国际化信息"><a href="#展示国际化信息" class="headerlink" title="展示国际化信息"></a>展示国际化信息</h5><p>使用通用标签库需要声明：<br><code>&lt;$@ taglib uri=&quot;http://www.springframework.org/tags&quot; prefix=&quot;s&quot; %&gt;</code> 前缀为自定义，s意为spring。</p>
+<p>在JSP文件中，借助<code>&lt;s:message&gt;</code>可以将硬编码的欢迎信息转换成如下形式：<br><code>&lt;h1&gt;&lt;s:message code=&quot;spittr.welcome&quot; /&gt;&lt;/h1&gt;</code><br><code>&lt;s:message&gt;</code>会根据key为<code>spittr.welcome</code>的信息源来渲染文本</p>
+<hr>
+<h2 id="校验请求的数据"><a href="#校验请求的数据" class="headerlink" title="校验请求的数据"></a>校验请求的数据</h2><p>初级的校验方法：在Controller对应的映射方法中，添加检查值的校验逻辑（if判断）</p>
+<p><strong>与其让校验逻辑弄乱Controller方法，不如使用Spring对Java校验API（Java Validation API）的支持</strong>。</p>
+<p>Java 校验API定义了多个注解，将注解放到属性上，就能限制属性的值。所需依赖:</p>
+<ul>
+<li><code>validation-api</code></li>
+<li><code>hibernate-validator</code></li>
+</ul>
+<p>　　<strong>这里要注意，如果使用Maven的tomcat插件运行项目，而<code>hibernate-validator</code>的version是6.0+，会报错<code>NoClassDefFoundError: javax/el/ELManager</code>。但是其实tomcat有el的相关依赖。原因是<code>hibernate-validator</code>5.4+开始就开始依赖<code>el-api</code>3.0+ 的版本，但是Tomcat插件是7.0+的版本,自带的是2.2版本的el-api</strong>。<br>　　解决方式：不通过maven的tomcat插件，直接用高版本的Tomcat运行；或者降低<code>hibernate-validator</code>的版本（如用5.3.6.Final）。<strong>推荐降低版本，适用于更多环境</strong>。参考：<a href="https://github.com/bfchengnuo/MyRecord/blob/master/FixException/NoClassDefFoundError-%20javax.el.ELManager%E9%94%99%E8%AF%AF.md" target="_blank" rel="noopener">找不到el依赖而报错的分析</a></p>
+<p>validation-api提供的校验注解</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@AssertFalse</td>
+<td>所注解的元素必须是Boolean类型，并且值为false</td>
+</tr>
+<tr>
+<td>@AssertTrue</td>
+<td>所注解的元素必须是Boolean类型，并且值为true</td>
+</tr>
+<tr>
+<td>@DecimalMax</td>
+<td>所注解的元素必须是数字，并且值要 &lt;= 给定的BigDemicalString值</td>
+</tr>
+<tr>
+<td>@DecimalMin</td>
+<td>所注解的元素必须是数字，并且值要 &gt;= 给定的BigDemicalString值</td>
+</tr>
+<tr>
+<td>@Digits</td>
+<td>所注解的元素必须是数字，并且它的值必须有指定的位数</td>
+</tr>
+<tr>
+<td>@Future</td>
+<td>所注解的元素必须是一个将来的日期</td>
+</tr>
+<tr>
+<td>@Max</td>
+<td>所注解的元素必须是数字，并且值要 &lt;= 给定的值</td>
+</tr>
+<tr>
+<td>@Min</td>
+<td>所注解的元素必须是数字，并且值要 &gt;= 给定的值</td>
+</tr>
+<tr>
+<td>@NotNull</td>
+<td>所注解的元素不能为null</td>
+</tr>
+<tr>
+<td>@Null</td>
+<td>所注解的元素必须为null</td>
+</tr>
+<tr>
+<td>@Past</td>
+<td>所注解的元素必须是一个过去的日期</td>
+</tr>
+<tr>
+<td>@Pattern</td>
+<td>所注解的元素的值必须匹配给定的正则表达式</td>
+</tr>
+<tr>
+<td>@Size</td>
+<td>所注解的元素的值必须是String、集合或数组，并且长度要符合给定的范围</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="处理Multipart形式的数据"><a href="#处理Multipart形式的数据" class="headerlink" title="处理Multipart形式的数据"></a>处理<code>Multipart</code>形式的数据</h2><h2 id="处理异常"><a href="#处理异常" class="headerlink" title="处理异常"></a>处理异常</h2><p>不论请求处理的过程是否出现异常，Serlvet请求输出的都是一个Servlet响应，**异常必须要以某种方式转换为响应。<br>Spring提供了多种方式将异常转换为响应：</p>
+<ul>
+<li>特定的Spring异常将会自动映射为指定的HTTP状态码</li>
+<li>异常上可以添加<code>@ResponseStatus</code>注解，从而将其映射为某一个HTTP状态码</li>
+<li>方法上可以添加<code>@ExceptionHandler</code>注解，进而放到响应之中。</li>
+</ul>
+<h3 id="将异常映射为HTTP状态码"><a href="#将异常映射为HTTP状态码" class="headerlink" title="将异常映射为HTTP状态码"></a>将异常映射为HTTP状态码</h3><p><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/Spring%E5%BC%82%E5%B8%B8%E8%BD%AC%E6%8D%A2%E4%B8%BAHTTP%E7%8A%B6%E6%80%81%E7%A0%81.png" alt="异常映射为HTTP状态码"></p>
+<p>　　图中的异常会由Spring自身抛出，作为DispatcherServlet处理过程中或执行校验时出现问题的结果。例如：如果DispatcherServlet无法找到适合处理请求的控制器方法，将会抛出<code>NoSuchRequestHandlingMethodException</code>异常，从而产生404状态码的响应。<br>　　尽管这些内置的映射很有用，但是对于应用所抛出的异常，它们就无能为力了。这时，可以通过Spring提供的<code>@ResponseStatus</code>注解，将异常映射为HTTP状态码</p>
+<h3 id="异常添加-ResponseStatus注解，映射为HTTP状态码"><a href="#异常添加-ResponseStatus注解，映射为HTTP状态码" class="headerlink" title="异常添加@ResponseStatus注解，映射为HTTP状态码"></a>异常添加<code>@ResponseStatus</code>注解，映射为HTTP状态码</h3><p><strong>如果出现没有任何映射的异常，响应都会带有500状态码</strong>。可以通过映射的异常类对该默认行为进行变更。</p>
+<h4 id="自定义异常类，并添加-ResponseStatus注解"><a href="#自定义异常类，并添加-ResponseStatus注解" class="headerlink" title="自定义异常类，并添加@ResponseStatus注解"></a>自定义异常类，并添加<code>@ResponseStatus</code>注解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseStatus</span>(value = HttpStatus.NOT_FOUND,</span><br><span class="line">                reason = <span class="string">"Spittle Not Found"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpittleNotFoundException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="编写异常处理的方法"><a href="#编写异常处理的方法" class="headerlink" title="编写异常处理的方法"></a>编写异常处理的方法</h4><p>在很多场景下，将异常映射为状态码是很简单的方案，并且就功能来说也足够。<strong>如果我们想在响应中不仅包括状态码，还要包含所产生的错误，就需要按照处理请求的方式来处理异常</strong>。</p>
+<p><strong>要将异常处理的操作从Controller的业务流程中剥离，单独为一个方法</strong></p>
+<h2 id="跨重定向请求传递数据"><a href="#跨重定向请求传递数据" class="headerlink" title="跨重定向请求传递数据"></a>跨重定向请求传递数据</h2><p>　　一般情况，当一个处理器方法完成之后，该方法所指定的模型数据将会复制到请求中，并作为请求中的属性，请求会转发（forward）到视图上进行渲染。因为控制器方法和视图所处理的是同一个请求，所以转发过程中，请求属性得以保存。</p>
+<p>　　<strong>但当控制器的结果是重定向的话，原始的请求就结束了（其中的模型数据也会一起消失），并会发起一个新的GET请求。在新的请求属性中，没有任何模型数据，新的请求必须要自己计算数据</strong>。</p>
+<p>显然，对于重定向来说，模型不能用来传递数据。但可以通过两种方案，能够从发起重定向的方法传递数据给处理重定向方法中：</p>
+<ul>
+<li>使用URL模板以路径变量（可以包含查询参数）的形式传递数据</li>
+<li>通过flash属性发送数据</li>
+</ul>
+<h3 id="通过URL模板进行重定向"><a href="#通过URL模板进行重定向" class="headerlink" title="通过URL模板进行重定向"></a>通过URL模板进行重定向</h3><p>通过路径变量和查询参数传递数据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">model.addAttribute(<span class="string">"username"</span>, spitter.getUsername());</span><br><span class="line">model.addAttribute(<span class="string">"userId"</span>, spitter.getId());</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  username作为占位符填充到url模板中，比起String形式直连更安全</span></span><br><span class="line"><span class="comment"> *  模型中其他所有的 原始类型值 都可以添加到URL中作为查询参数，</span></span><br><span class="line"><span class="comment"> *  如果没有相应的占位符，会自动以查询参数的形式附加到重定向URL上。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">return</span> <span class="string">"redirect:/spitter/&#123;username&#125;"</span>;<span class="comment">//redirect的路径实际还会加上 ?spitterId=xxxx</span></span><br></pre></td></tr></table></figure>
+<p>很简单，也有一定的限制：只能用来发送原始类型值。这时，flash属性可以提供帮助。</p>
+<h3 id="使用flash属性"><a href="#使用flash属性" class="headerlink" title="使用flash属性"></a>使用flash属性</h3><p>　　其实还有个方案是将要传输的 对象放到会话(session)中。会话能够长期存在，并能跨多个请求，可以在重定向发生之前将Spitter放到会话中，并在重定向后，从会话中将其取出并将其从会话中清理掉。<br>　　但Spring认为我们并不需要管理这些数据（从会话中存取、清理等工作），提供了将数据发送为flash属性（flash attribute）的功能。按照定义，<strong>flash属性会一直携带这些数据直到下次请求，然后消失</strong>。</p>
+<p>Spring提供了通过<code>RedirectAttributes</code>（Spring3.1引入的Model子接口，提供了Model的所有功能），设置flash属性的方法<code>addFlashAtrribute()</code>。<br>例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">register</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">                          @RequestPart(<span class="string">"icon"</span>)</span> MultipartFile icon,</span></span><br><span class="line"><span class="function">                          @Valid Spitter spitter,</span></span><br><span class="line"><span class="function">                          Errors errors,</span></span><br><span class="line"><span class="function">                          RedirectAttributes model)  </span>&#123;</span><br><span class="line">   ...</span><br><span class="line">   model.addAttribute(<span class="string">"username"</span>, spitter.getUsername());</span><br><span class="line">   model.addFlashAttribute(<span class="string">"spitter"</span>, spitter);</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> <span class="string">"redirect:/spitter/&#123;username&#125;"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>在重定向执行之前，所有的flash属性都会复制到会话中。在重定向之后，存在会话中的flash属性会被取出，转移到模型中。<br><img src="https://github.com/Hunter1023/blogSource/raw/master/source/image/flash%E5%B1%9E%E6%80%A7%E8%B7%A8%E9%87%8D%E5%AE%9A%E5%90%91%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE.png" alt="通过flash属性传输示意图"></p>
+<hr>
+<h2 id="实现全局的登录状态"><a href="#实现全局的登录状态" class="headerlink" title="实现全局的登录状态"></a>实现全局的登录状态</h2><h3 id="后端在Controller中"><a href="#后端在Controller中" class="headerlink" title="后端在Controller中"></a>后端在Controller中</h3><p>　　通过session对登录信息进行增删</p>
+<pre><code>- `session.setAttribute(&quot;user&quot;, user);`
+- `session.removeAttribute(&quot;user&quot;);`
+</code></pre><h3 id="前端在JSP页面中"><a href="#前端在JSP页面中" class="headerlink" title="前端在JSP页面中"></a>前端在JSP页面中</h3><p>　　通过jstl的c标签，获取session中的相关内容进行判断<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123;empty sessionScope.spitter&#125;"</span>&gt;</span><br><span class="line">    &lt;li&gt;&lt;a href="&lt;c:url value="/login" /&gt;"&gt;登录&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;&lt;a href="&lt;c:url value="/register"/&gt;"&gt;注册&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;/c:if&gt;</span><br><span class="line">&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123;!empty sessionScope.spitter&#125;"</span>&gt;</span><br><span class="line">    &lt;li&gt;&lt;a href="&lt;c:url value="/$&#123;sessionScope.spitter.username&#125;" /&gt;"&gt;个人主页&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;&lt;a href="&lt;c:url value="/logout"/&gt;"&gt;退出&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;/c:if&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DispatcherServlet/" rel="tag"># DispatcherServlet</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/12/AOP的简单总结/" rel="next" title="AOP的简单总结">
+                <i class="fa fa-chevron-left"></i> AOP的简单总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/17/解决Properties文件的中文内容乱码/" rel="prev" title="解决Properties文件的中文内容乱码">
+                解决Properties文件的中文内容乱码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4" alt="MotainZhang">
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要Spring-MVC框架"><span class="nav-number">1.</span> <span class="nav-text">为什么需要Spring MVC框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DispatcherServlet"><span class="nav-number">2.</span> <span class="nav-text">DispatcherServlet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用DispatcherServlet"><span class="nav-number">2.1.</span> <span class="nav-text">如何使用DispatcherServlet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebApplicationContext"><span class="nav-number">3.</span> <span class="nav-text">WebApplicationContext</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ContextLoaderListener"><span class="nav-number">4.</span> <span class="nav-text">ContextLoaderListener</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用Spring-MVC"><span class="nav-number">5.</span> <span class="nav-text">启用Spring MVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller"><span class="nav-number">6.</span> <span class="nav-text">Controller</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义Controller"><span class="nav-number">6.1.</span> <span class="nav-text">定义Controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#声明-ResultMapping"><span class="nav-number">6.2.</span> <span class="nav-text">声明@ResultMapping</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#view相关"><span class="nav-number">7.</span> <span class="nav-text">view相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSP视图"><span class="nav-number">7.1.</span> <span class="nav-text">JSP视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解析JSTL视图"><span class="nav-number">7.1.1.</span> <span class="nav-text">解析JSTL视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Spring的JSP库"><span class="nav-number">7.1.2.</span> <span class="nav-text">使用Spring的JSP库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#将表单绑定到模型上"><span class="nav-number">7.1.2.1.</span> <span class="nav-text">将表单绑定到模型上</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#展示错误说明"><span class="nav-number">7.1.2.2.</span> <span class="nav-text">展示错误说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#展示国际化信息"><span class="nav-number">7.1.2.3.</span> <span class="nav-text">展示国际化信息</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#校验请求的数据"><span class="nav-number">8.</span> <span class="nav-text">校验请求的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理Multipart形式的数据"><span class="nav-number">9.</span> <span class="nav-text">处理Multipart形式的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理异常"><span class="nav-number">10.</span> <span class="nav-text">处理异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将异常映射为HTTP状态码"><span class="nav-number">10.1.</span> <span class="nav-text">将异常映射为HTTP状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常添加-ResponseStatus注解，映射为HTTP状态码"><span class="nav-number">10.2.</span> <span class="nav-text">异常添加@ResponseStatus注解，映射为HTTP状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义异常类，并添加-ResponseStatus注解"><span class="nav-number">10.2.1.</span> <span class="nav-text">自定义异常类，并添加@ResponseStatus注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写异常处理的方法"><span class="nav-number">10.2.2.</span> <span class="nav-text">编写异常处理的方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨重定向请求传递数据"><span class="nav-number">11.</span> <span class="nav-text">跨重定向请求传递数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过URL模板进行重定向"><span class="nav-number">11.1.</span> <span class="nav-text">通过URL模板进行重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用flash属性"><span class="nav-number">11.2.</span> <span class="nav-text">使用flash属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现全局的登录状态"><span class="nav-number">12.</span> <span class="nav-text">实现全局的登录状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#后端在Controller中"><span class="nav-number">12.1.</span> <span class="nav-text">后端在Controller中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端在JSP页面中"><span class="nav-number">12.2.</span> <span class="nav-text">前端在JSP页面中</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
