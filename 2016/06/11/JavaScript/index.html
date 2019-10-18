@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,js,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="JavaScript概述JavaScript是基于对象和事件驱动的脚本语言，主要应用在客户端，比如提交的时候，进行用户名是否为空的判断。 特点 交互性(信息的动态交互) 安全性(不允许直接访问本地硬盘) 跨平台性(只要是可以解析Js的浏览器都能运行，与平台无关)  JavaScript和HTML的两种结合方式将JavaScript代码封装到标签中script标签可以放在html的任何地方，建议将s">
+<meta name="keywords" content="JavaScript,js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript">
+<meta property="og:url" content="https://motainzhang.com/2016/06/11/JavaScript/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="JavaScript概述JavaScript是基于对象和事件驱动的脚本语言，主要应用在客户端，比如提交的时候，进行用户名是否为空的判断。 特点 交互性(信息的动态交互) 安全性(不允许直接访问本地硬盘) 跨平台性(只要是可以解析Js的浏览器都能运行，与平台无关)  JavaScript和HTML的两种结合方式将JavaScript代码封装到标签中script标签可以放在html的任何地方，建议将s">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-18T03:34:00.262Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript">
+<meta name="twitter:description" content="JavaScript概述JavaScript是基于对象和事件驱动的脚本语言，主要应用在客户端，比如提交的时候，进行用户名是否为空的判断。 特点 交互性(信息的动态交互) 安全性(不允许直接访问本地硬盘) 跨平台性(只要是可以解析Js的浏览器都能运行，与平台无关)  JavaScript和HTML的两种结合方式将JavaScript代码封装到标签中script标签可以放在html的任何地方，建议将s">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2016/06/11/JavaScript/">
+
+
+
+
+
+  <title>JavaScript | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2016/06/11/JavaScript/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-11T23:22:05+00:00">
+                2016-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/11/JavaScript/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2016/06/11/JavaScript/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="JavaScript概述"><a href="#JavaScript概述" class="headerlink" title="JavaScript概述"></a>JavaScript概述</h2><p><code>JavaScript</code>是<strong>基于对象和事件驱动的脚本语言</strong>，主要应用在客户端，比如提交的时候，进行用户名是否为空的判断。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>交互性(信息的动态交互)</li>
+<li>安全性(不允许直接访问本地硬盘)</li>
+<li>跨平台性(只要是可以解析Js的浏览器都能运行，与平台无关)</li>
+</ul>
+<h2 id="JavaScript和HTML的两种结合方式"><a href="#JavaScript和HTML的两种结合方式" class="headerlink" title="JavaScript和HTML的两种结合方式"></a>JavaScript和HTML的两种结合方式</h2><h3 id="将JavaScript代码封装到标签中"><a href="#将JavaScript代码封装到标签中" class="headerlink" title="将JavaScript代码封装到标签中"></a>将JavaScript代码封装到标签中</h3><p>script标签可以放在html的任何地方，<strong>建议将script标签放到<code>&lt;/body&gt;</code>之后</strong>。<br>如果JS需要获取input的值，因为html是从上到下解析，如果将script标签放到head里，直接取input里面的值，由于未解析到，导致无法获取。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">--</span> 填写<span class="attr">JS</span>代码 <span class="attr">--</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="将JavaScript代码封装到JS文件中，并通过-lt-script-gt-的src属性进行导入"><a href="#将JavaScript代码封装到JS文件中，并通过-lt-script-gt-的src属性进行导入" class="headerlink" title="将JavaScript代码封装到JS文件中，并通过&lt;script&gt;的src属性进行导入"></a>将JavaScript代码封装到JS文件中，并通过<code>&lt;script&gt;</code>的src属性进行导入</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js文件路径"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：如果<code>&lt;script&gt;</code>标签中使用<code>src</code>属性，那么该标签中封装的javascript代码将不会被执行。</p>
+<h2 id="JavaScript语法"><a href="#JavaScript语法" class="headerlink" title="JavaScript语法"></a>JavaScript语法</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>JS中定义变量，使用到关键字<code>var</code>(variable)  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;//JS是弱类型语言</span><br><span class="line">alert(&quot;x=&quot;+x);//这是一个函数，将具体的参数通过对话框进行显示。</span><br><span class="line">```  </span><br><span class="line">注：`&quot;&quot;`和`&apos;&apos;`所包括的内容，都是指字符串。</span><br><span class="line"></span><br><span class="line">### 运算符  </span><br><span class="line"></span><br><span class="line">- 算数运算符</span><br></pre></td></tr></table></figure>
+<p>var a = 3710;<br>alert(“a=”+a/1000*1000);//a=3710<br>var a1 = 2.3, b1 = 4.7;<br>alert(“a1+b1=”+(a1+b1));//算数结果是7<br>alert(“12”+1);//结果生成字符串121<br>alert(“12”-1);//12会被转成数字，再进行算术运算。结果为11<br>alert(true+1);//结果是2，JS中false就是0或者null；非0非null就是true，默认用1来表示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- `==`和`===`的区别</span><br><span class="line">做判断时，`==`比较的是值，`===`比较的是值和类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 逻辑运算符(! &amp;&amp; ||)  </span><br><span class="line">用来连接2个boolean型的表达式</span><br></pre></td></tr></table></figure></p>
+<p>var t = 4;<br>alert(t&gt;3 &amp; t&lt;7);//结果是1<br>alert(t&gt;3 &amp;&amp; t&lt;7);//结果是true<br>alert(!t);//结果是false<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 语法的一些细节  </span><br><span class="line"></span><br><span class="line">- undefined(未定义)  </span><br><span class="line">其实是一个常量</span><br></pre></td></tr></table></figure></p>
+<p>var x;<br>alert(x==undefined);//true<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 通过`typeof()`，可以获得具体值的类型</span><br></pre></td></tr></table></figure></p>
+<p>alert(typeof(“abc”));//string<br>alert(typeof(2.5));//number<br>alert(typeof(true));//boolean<br>alert(typeof(78));//number<br>alert(typeof’9’));//string<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 关于引入  </span><br><span class="line">直接向页面输出语句(可以把内容显示在页面上)  </span><br><span class="line">`document.write(&quot;输出内容&quot;);`，document是javascript的内置对象，代表浏览器的文档部分，**可以向页面输出变量、固定值和HTML代码**。</span><br><span class="line"></span><br><span class="line">### JS的数组  </span><br><span class="line">- 三种定义方式  </span><br><span class="line">  1. `var arr=[1,2,3]; var arr=[1,&quot;4&quot;, true];`  //即**数组可以存放不同数据类型**</span><br><span class="line">  2. 使用内置对象 array对象  </span><br><span class="line">    `var arr1=new array(5);`//定义一个数组，数组的长度是5  </span><br><span class="line">    arr1[0]=&quot;1&quot;;  </span><br><span class="line">  3. 使用内置对象 array对象  </span><br><span class="line">    `var arr2=new array(3,4,5);`//定义一个数组，里面的元素是3、4、5  </span><br><span class="line">- 属性  </span><br><span class="line">  - length（获取数组的长度）</span><br><span class="line">    **数组长度可变**</span><br><span class="line"></span><br><span class="line">### JS的函数  </span><br><span class="line">**函数的参数列表里，不需要写var，直接写参数名称**</span><br><span class="line">- 三种定义方式  </span><br><span class="line">  </span><br><span class="line">1. 使用到关键字 function </span><br><span class="line">```  </span><br><span class="line">　　　function 方法名(参数列表) &#123;</span><br><span class="line">　　　　方法体;</span><br><span class="line">　　　　返回值可有可无(根据实际需要);</span><br><span class="line">　　　&#125;</span><br><span class="line">```  </span><br><span class="line">2. 匿名函数</span><br></pre></td></tr></table></figure></p>
+<p>function(参数列表){<br>　方法体和返回值;<br>}<br>var add3 = function(m,n) {<br>　alert(m+n);<br>}<br>//调用方法<br>add(5,6);<br><code>`</code>  </p>
+<ol start="3">
+<li>（用得少，作了解）<br> 动态函数，用到JS里的一个内置对象 Function<br><code>var add = new Function(&quot;参数列表&quot;,&quot;方法体和返回值&quot;);</code></li>
+</ol>
+<h3 id="JS的全局变量和局部变量"><a href="#JS的全局变量和局部变量" class="headerlink" title="JS的全局变量和局部变量"></a>JS的全局变量和局部变量</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/11/AJAX/" rel="next" title="AJAX">
+                <i class="fa fa-chevron-left"></i> AJAX
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/12/使用jQuery实现Ajax/" rel="prev" title="使用jQuery实现Ajax">
+                使用jQuery实现Ajax <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4" alt="MotainZhang">
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript概述"><span class="nav-number">1.</span> <span class="nav-text">JavaScript概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript和HTML的两种结合方式"><span class="nav-number">3.</span> <span class="nav-text">JavaScript和HTML的两种结合方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将JavaScript代码封装到标签中"><span class="nav-number">3.1.</span> <span class="nav-text">将JavaScript代码封装到标签中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将JavaScript代码封装到JS文件中，并通过-lt-script-gt-的src属性进行导入"><span class="nav-number">3.2.</span> <span class="nav-text">将JavaScript代码封装到JS文件中，并通过&lt;script&gt;的src属性进行导入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript语法"><span class="nav-number">4.</span> <span class="nav-text">JavaScript语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">4.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS的全局变量和局部变量"><span class="nav-number">4.2.</span> <span class="nav-text">JS的全局变量和局部变量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>

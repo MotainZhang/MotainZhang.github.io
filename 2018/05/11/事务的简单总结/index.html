@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring,JDBC,MyBatis,transaction,隔离级别,死锁,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="MotainZhang" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="什么是事务事务是并发控制的基本单元，指作为单个逻辑工作单元执行的一系列操作，而这些逻辑工作单元需要满足ACID特性。所谓ACID:  Automicity(原子性)：事务包含的所有操作，要么全部完成，要么全部不完成。 Consistency(一致性)：事务执行前后，数据必须处于一致的状态。 Isolation(隔离性)：一个事务内部的操作及使用的数据对并发的其他事务是隔离的。 Durability">
+<meta name="keywords" content="Spring,JDBC,MyBatis,transaction,隔离级别,死锁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事务的简单总结">
+<meta property="og:url" content="https://motainzhang.com/2018/05/11/事务的简单总结/index.html">
+<meta property="og:site_name" content="MotainZhang">
+<meta property="og:description" content="什么是事务事务是并发控制的基本单元，指作为单个逻辑工作单元执行的一系列操作，而这些逻辑工作单元需要满足ACID特性。所谓ACID:  Automicity(原子性)：事务包含的所有操作，要么全部完成，要么全部不完成。 Consistency(一致性)：事务执行前后，数据必须处于一致的状态。 Isolation(隔离性)：一个事务内部的操作及使用的数据对并发的其他事务是隔离的。 Durability">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-18T03:34:00.262Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="事务的简单总结">
+<meta name="twitter:description" content="什么是事务事务是并发控制的基本单元，指作为单个逻辑工作单元执行的一系列操作，而这些逻辑工作单元需要满足ACID特性。所谓ACID:  Automicity(原子性)：事务包含的所有操作，要么全部完成，要么全部不完成。 Consistency(一致性)：事务执行前后，数据必须处于一致的状态。 Isolation(隔离性)：一个事务内部的操作及使用的数据对并发的其他事务是隔离的。 Durability">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://motainzhang.com/2018/05/11/事务的简单总结/">
+
+
+
+
+
+  <title>事务的简单总结 | MotainZhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MotainZhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://motainzhang.com/2018/05/11/事务的简单总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MotainZhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MotainZhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">事务的简单总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-11T18:19:32+00:00">
+                2018-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/事务/" itemprop="url" rel="index">
+                    <span itemprop="name">事务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/11/事务的简单总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/05/11/事务的简单总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h2><p>事务是并发控制的基本单元，指作为单个逻辑工作单元执行的一系列操作，而这些逻辑工作单元需要满足<strong>ACID</strong>特性。<br>所谓ACID:</p>
+<ul>
+<li>Automicity(原子性)：事务包含的所有操作，要么全部完成，要么全部不完成。</li>
+<li>Consistency(一致性)：事务执行前后，数据必须处于一致的状态。</li>
+<li>Isolation(隔离性)：一个事务内部的操作及使用的数据对并发的其他事务是隔离的。</li>
+<li>Durability(持久性)：一个事务一旦提交成功，则事务对数据的改变永久生效。</li>
+</ul>
+<h2 id="JDBC进行事务管理"><a href="#JDBC进行事务管理" class="headerlink" title="JDBC进行事务管理"></a>JDBC进行事务管理</h2><p>Connection对象的相关方法：</p>
+<ul>
+<li><code>setAutoCommit()</code></li>
+<li><code>commit()</code></li>
+<li><code>rollback()</code></li>
+</ul>
+<p>…</p>
+<h2 id="事务并发执行可能会导致的异常"><a href="#事务并发执行可能会导致的异常" class="headerlink" title="事务并发执行可能会导致的异常"></a>事务并发执行可能会导致的异常</h2><ul>
+<li>脏读： 读取一个事务未提交的更新。</li>
+<li>不可重复读：同一个事务中两次读取相同的记录，结果（值）不一样。</li>
+<li>幻读：两次读取的结果包含的行记录数不一样。</li>
+</ul>
+<h2 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h2><ul>
+<li>read uncommitted(读未提交)：允许出现脏读</li>
+<li>read committed（读提交）：不允许脏读，允许不可重复读</li>
+<li>repeatable read（重复读）：不允许不可重复读，允许幻读</li>
+<li>serializable（串行化）：<strong>最高的事务隔离级别</strong>，不允许幻读，并发控制最严格，数据都串行执行。</li>
+</ul>
+<p><strong>MySQL默认的事务隔离级别是repeatable read（重复读）</strong>。</p>
+<p>事务隔离级别越高，数据库性能越差，编程难度越低。</p>
+<h3 id="查看-设置-隔离级别"><a href="#查看-设置-隔离级别" class="headerlink" title="查看/设置 隔离级别"></a>查看/设置 隔离级别</h3><p><code>Connection</code>对象的<code>getTransactionIsolation()</code>和<code>setTransactionIsolation()</code></p>
+<hr>
+<h2 id="死锁分析与解决"><a href="#死锁分析与解决" class="headerlink" title="死锁分析与解决"></a>死锁分析与解决</h2><p>…</p>
+<h2 id="Spring进行事务管理"><a href="#Spring进行事务管理" class="headerlink" title="Spring进行事务管理"></a>Spring进行事务管理</h2><p>优点：</p>
+<ul>
+<li>统一的事务编程模型（不论底层的事务管理是JDBC还是Hibernate）</li>
+<li>提供了编程式事务和声明式事务（通过AOP实现）两种方式</li>
+</ul>
+<p>Spring对事务管理抽象出了一个<code>PlatformTransactionManager</code>接口：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PlatformTransactionManager</span> </span>&#123;</span><br><span class="line">    <span class="function">TransactionStatus <span class="title">getTransaction</span><span class="params">(TransactionDefinition definition)</span> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">commit</span><span class="params">(TransactionStatus status)</span> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rollback</span><span class="params">(TransactionStatus status)</span> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>PlatformTransactionManager</code>接口有两个具体实现：</p>
+<ul>
+<li><code>DataSourceTransactionManager</code>(JDBC)</li>
+<li><code>HibernateTransactionManager</code>(Hibernate)</li>
+<li>底层实现不同，但是接口一致</li>
+</ul>
+<h3 id="TransactionDefinition-事务的定义"><a href="#TransactionDefinition-事务的定义" class="headerlink" title="TransactionDefinition 事务的定义"></a><code>TransactionDefinition</code> 事务的定义</h3><ul>
+<li><code>getName()</code>：获取事务名称</li>
+<li><code>getIsolationLevel()</code>：获取隔离级别</li>
+<li><code>getPropagationBehavior()</code>：获取传播行为</li>
+<li><code>getTimeout()</code>：获取超时时间</li>
+<li><code>isReadOnly()</code>：事务是否只读(Hiberate会用到这个属性)</li>
+</ul>
+<h3 id="TransactionStatus-事务的状态"><a href="#TransactionStatus-事务的状态" class="headerlink" title="TransactionStatus 事务的状态"></a><code>TransactionStatus</code> 事务的状态</h3><ul>
+<li><code>isNewTransaction()</code>：是否是新事务</li>
+<li><code>hasSavepoint()</code>：是否有savepoint（诊断，NESTED）</li>
+<li><code>isCompleted()</code>：是否已完成</li>
+<li><code>isRollbackOnly()</code>：事务结果是否是rollback-only</li>
+<li><code>setRollbackOnly()</code>：设置事务为rollback-only</li>
+</ul>
+<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><ul>
+<li>ISOLATION_READ_UNCOMMITTED：读未提交</li>
+<li>ISOLATION_READ_COMMITTED：读提交</li>
+<li>ISOLATION_REPEATABLE_READ：重复读</li>
+<li>ISOLATION_SERIALIZABLE：串行化</li>
+<li>ISOLATION_DEFAULT：默认（根据底层的事务管理是JDBC还是Hibernate而不同）</li>
+</ul>
+<h3 id="函数的传播行为"><a href="#函数的传播行为" class="headerlink" title="函数的传播行为"></a>函数的传播行为</h3><ul>
+<li>PROPAGATION_MANDATORY<br>必须在一个事务中运行，不存在则抛异常（即运行该函数之前，已有事务）</li>
+<li>PROPAGATION_NEVER<br>不应该在事务中运行，存在则抛异常（如果调用该函数是，已有事务，就抛出异常）</li>
+<li>PROPAGATION_NOT_SUPPORTED<br>不应该在事务中运行，如果存在事务则将事务挂起</li>
+<li>PROPAGATION_SUPPORTS<br>不需要事务，已有事务则在事务中执行</li>
+<li>PROPAGATION_REQUIRED<br>必须在事务中执行，如果不存在事务，启动新事务。<br>内部事务会影响外部事务（内部事务如果抛出异常，外部事务也将无法提交）。</li>
+<li>PROPAGATION_NESTED<br>必须在事务中执行，如果不存在，启动新事务。<br>事物之间相互不影响（savepoints）。</li>
+<li>PROPAGATION_REQUIRES_NEW<br>必须在新事务中执行，已有事务则挂起当前事务。</li>
+</ul>
+<h3 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">...</span></span></span><br><span class="line"><span class="tag">     <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"</span></span></span><br><span class="line"><span class="tag"><span class="string">     ...</span></span></span><br><span class="line"><span class="tag"><span class="string">     http://www.springframework.org/schema/tx</span></span></span><br><span class="line"><span class="tag"><span class="string">     http://www.springframework.org/schema/tx/spring-tx.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="定义事务管理器"><a href="#定义事务管理器" class="headerlink" title="定义事务管理器"></a>定义事务管理器</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="定义事务Advice"><a href="#定义事务Advice" class="headerlink" title="定义事务Advice"></a>定义事务<code>Advice</code></h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"txAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"get*"</span> <span class="attr">read-only</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"*"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中，子标签<code>&lt;tx:method&gt;</code>有如下属性</p>
+<ul>
+<li>name：匹配的函数名称，支持*匹配</li>
+<li>propagation：事务传播行为</li>
+<li>isolation：事务隔离级别</li>
+<li>timeout：超时</li>
+<li>read-only：是否只读事务</li>
+<li>rollback-for：触发回滚的异常，<code>,</code>分隔</li>
+<li>no-rollback-for：不触发回滚的异常，<code>,</code>分隔</li>
+</ul>
+<h4 id="定义Pointcut"><a href="#定义Pointcut" class="headerlink" title="定义Pointcut"></a>定义<code>Pointcut</code></h4><p>在aop的配置标签中定义<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">expression</span>=<span class="string">"execute....."</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"txAdvice"</span> <span class="attr">pointcut-ref</span>=<span class="string">"上一行定义的id"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="除了XML声明，可以通过-Transactional声明事务"><a href="#除了XML声明，可以通过-Transactional声明事务" class="headerlink" title="除了XML声明，可以通过@Transactional声明事务"></a>除了XML声明，可以通过<code>@Transactional</code>声明事务</h4><p>XML配置文件中添加如下内容：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)</span><br><span class="line"><span class="keyword">public</span> ....()&#123;...&#125;<span class="comment">//被声明为事务的具体函数</span></span><br></pre></td></tr></table></figure>
+<p>在@Transactional后边括号中可以填写的内容：</p>
+<ul>
+<li>value：使用的TransactionManager</li>
+<li>propagation：事务传播行为</li>
+<li>isolation：事务隔离级别</li>
+<li>timeout：超时</li>
+<li>readOnly：是否只读事务</li>
+<li>rollbackFor：触发回滚的异常类对象数组</li>
+<li>rollbackForClassName：触发回滚的异常类名称数组</li>
+<li>noRollbackFor：不触发回滚的异常类对象数组</li>
+<li>noRollbackForClassName：不触发回滚的异常类名称数组</li>
+</ul>
+<h3 id="编程式事务"><a href="#编程式事务" class="headerlink" title="编程式事务"></a>编程式事务</h3><p>两种方式：</p>
+<ul>
+<li>TransactionTemplate</li>
+<li>PlatformTransactionManager的实现</li>
+</ul>
+<h4 id="方式一：TransactionTemplate"><a href="#方式一：TransactionTemplate" class="headerlink" title="方式一：TransactionTemplate"></a>方式一：TransactionTemplate</h4><p>1.定义TransactionTemplate<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleService</span> <span class="keyword">implements</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TransactionTemplate transactionTemplate;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SimpleService</span><span class="params">(PlatformTransactionManager transactionManager)</span> </span>&#123;</span><br><span class="line">        transactionTemplate = <span class="keyword">new</span> TransactionTemplate(transactionManager);</span><br><span class="line">        transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_UNCOMMITED);</span><br><span class="line">        transactionTemplate.setTimeout(<span class="number">30</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>使用TransactionTemplate<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">someMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> transactionTemplate.execute(<span class="keyword">new</span> TransactionCallback() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">doInTransaction</span><span class="params">(TransactionStatus status)</span> </span>&#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>…</p>
+<h4 id="方式二：-PlatformTransactionManager的实现"><a href="#方式二：-PlatformTransactionManager的实现" class="headerlink" title="方式二： PlatformTransactionManager的实现"></a>方式二： PlatformTransactionManager的实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">DefaultTransactionDefinition def = <span class="keyword">new</span> DefaultTransactionDefinition();</span><br><span class="line">def.setName(<span class="string">"someTxName"</span>);</span><br><span class="line">def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);</span><br><span class="line"></span><br><span class="line">TransactionStatus status = txManager.getTransaction(def);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//do some transaction logic</span></span><br><span class="line">&#125; <span class="keyword">catch</span>(MyException ex) &#123;</span><br><span class="line">    txManager.rollback(status);</span><br><span class="line">    <span class="keyword">throw</span> ex;</span><br><span class="line">&#125;</span><br><span class="line">txManager.commit(status);</span><br></pre></td></tr></table></figure>
+<h2 id="MyBatis和Spring整合之后，如何使用事务管理"><a href="#MyBatis和Spring整合之后，如何使用事务管理" class="headerlink" title="MyBatis和Spring整合之后，如何使用事务管理"></a>MyBatis和Spring整合之后，如何使用事务管理</h2><p>　　代码中无需显式地指定事务的配置。底层的TransactionManager跟MyBatis的SQL操作无缝整合，无需额外的声明。可以直接使用事务管理的功能(同样支持声明式事务和编程式事务)。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/JDBC/" rel="tag"># JDBC</a>
+          
+            <a href="/tags/MyBatis/" rel="tag"># MyBatis</a>
+          
+            <a href="/tags/transaction/" rel="tag"># transaction</a>
+          
+            <a href="/tags/隔离级别/" rel="tag"># 隔离级别</a>
+          
+            <a href="/tags/死锁/" rel="tag"># 死锁</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/11/数据库连接池的简单总结/" rel="next" title="数据库连接池的简单总结">
+                <i class="fa fa-chevron-left"></i> 数据库连接池的简单总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/12/IoC容器/" rel="prev" title="IoC容器及其管理对象Bean">
+                IoC容器及其管理对象Bean <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars1.githubusercontent.com/u/27069108?s=460&v=4" alt="MotainZhang">
+            
+              <p class="site-author-name" itemprop="name">MotainZhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MotainZhang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="sw20026@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/jszhang" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com/" title="V2EX" target="_blank">V2EX</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://e.xitu.io/" title="JueJin" target="_blank">JueJin</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chuangzaoshi.com/code" title="Web创造狮导航" target="_blank">Web创造狮导航</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是事务"><span class="nav-number">1.</span> <span class="nav-text">什么是事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDBC进行事务管理"><span class="nav-number">2.</span> <span class="nav-text">JDBC进行事务管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务并发执行可能会导致的异常"><span class="nav-number">3.</span> <span class="nav-text">事务并发执行可能会导致的异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务的隔离级别"><span class="nav-number">4.</span> <span class="nav-text">事务的隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-设置-隔离级别"><span class="nav-number">4.1.</span> <span class="nav-text">查看/设置 隔离级别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁分析与解决"><span class="nav-number">5.</span> <span class="nav-text">死锁分析与解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring进行事务管理"><span class="nav-number">6.</span> <span class="nav-text">Spring进行事务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TransactionDefinition-事务的定义"><span class="nav-number">6.1.</span> <span class="nav-text">TransactionDefinition 事务的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TransactionStatus-事务的状态"><span class="nav-number">6.2.</span> <span class="nav-text">TransactionStatus 事务的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离级别"><span class="nav-number">6.3.</span> <span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的传播行为"><span class="nav-number">6.4.</span> <span class="nav-text">函数的传播行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#声明式事务"><span class="nav-number">6.5.</span> <span class="nav-text">声明式事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义事务管理器"><span class="nav-number">6.5.1.</span> <span class="nav-text">定义事务管理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义事务Advice"><span class="nav-number">6.5.2.</span> <span class="nav-text">定义事务Advice</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义Pointcut"><span class="nav-number">6.5.3.</span> <span class="nav-text">定义Pointcut</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除了XML声明，可以通过-Transactional声明事务"><span class="nav-number">6.5.4.</span> <span class="nav-text">除了XML声明，可以通过@Transactional声明事务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程式事务"><span class="nav-number">6.6.</span> <span class="nav-text">编程式事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方式一：TransactionTemplate"><span class="nav-number">6.6.1.</span> <span class="nav-text">方式一：TransactionTemplate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式二：-PlatformTransactionManager的实现"><span class="nav-number">6.6.2.</span> <span class="nav-text">方式二： PlatformTransactionManager的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis和Spring整合之后，如何使用事务管理"><span class="nav-number">7.</span> <span class="nav-text">MyBatis和Spring整合之后，如何使用事务管理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MotainZhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'VITR9FskbbXnDcpwBdyTT15i-gzGzoHsz',
+        appKey: 'acgrONeHircp8V2jHpsppXdm',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
